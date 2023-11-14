@@ -1,0 +1,36 @@
+buildscript {
+    ext {
+        grpcVersion = '1.59.0'
+    }
+}
+
+plugins {
+    id 'com.google.protobuf' version '0.9.4'
+    id 'org.springframework.boot' version '3.1.4'
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+    id 'java'
+}
+
+dependencies {
+    runtimeOnly libs.grpc.netty.shaded
+    implementation libs.grpc.protobuf
+    implementation libs.grps.stub
+    compileOnly libs.tomcat.annotations.api
+    implementation libs.grpc.client.spring.boot.starter
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.22.3"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}

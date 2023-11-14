@@ -2,4 +2,3 @@ rootProject.name = 'fintech-company-ab-2023'
 
 include 'product-engine'
 include 'payment-gate'
-

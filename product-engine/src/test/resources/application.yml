@@ -1,0 +1,14 @@
+spring:
+  liquibase:
+    change-log:
+      classpath:db/changelog/db.changelog-master.xml
+
+grpc:
+  client:
+    stocks:
+      address: in-process:test
+      enableKeepAlive:
+      negotiationType:
+  server:
+    inProcessName: test
+    port: -1

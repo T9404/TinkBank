@@ -1,16 +1,38 @@
 [versions]
 spring-boot = "3.1.4"
-
-[plugins]
-spring-plugin = { id = "org.springframework.boot", version.ref = "spring-boot" }
+grpc = "1.58.0"
+logback = "1.4.11"
+lombok = "1.18.20"
+testcontainers = "1.19.1"
+junit-jupiter = "5.10.0"
+h2 = "2.1.214"
 
 [libraries]
 spring-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
 spring-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "spring-boot" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
+spring-starter-parent = { module = "org.springframework.boot:spring-boot-starter-parent", version.ref = "spring-boot" }
 
-lombok = { module = "org.projectlombok:lombok", version = "1.18.26" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring-boot" }
+postgresql = { module = "org.postgresql:postgresql" }
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.6.0" }
+validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
+liquibase-core = { module = "org.liquibase:liquibase-core" }
+
+grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc" }
+grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }
+grps-stub = { module = "io.grpc:grpc-stub", version.ref = "grpc" }
+tomcat-annotations-api = { module = "org.apache.tomcat:annotations-api", version = "6.0.53" }
+grpc-client-spring-boot-starter = { module = "net.devh:grpc-client-spring-boot-starter", version = "2.15.0.RELEASE" }
+grpc-server-spring-boot-starter = { module = "net.devh:grpc-server-spring-boot-starter", version = "2.15.0.RELEASE" }
+grps-services = { module = "io.grpc:grpc-services", version.ref = "grpc" }
 
 #Test libraries
-testcontainers-core = { module = "org.testcontainers:testcontainers", version = "1.19.1" }
-jupiter = { module = "org.junit.jupiter:junit-jupiter", version = "5.10.0" }
+testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+jupiter-testcontainers = { module = "org.testcontainers:junit-jupiter", version = "1.19.1" }
+postgresql-testcontainers = { module = "org.testcontainers:postgresql" }
+h2database = { module = "com.h2database:h2", version.ref = "h2" }
+grps-test = { module = "io.grpc:grpc-testing", version.ref = "grpc" }
