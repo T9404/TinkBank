@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import proto.DisbursementRequest;
 
-import java.util.UUID;
-
 import static com.academy.fintech.pe.core.service.agreement.util.ProtobufConverter.fromGoogleTimestampToLocalDateTime;
 
 @Service
@@ -24,12 +22,12 @@ public class AgreementService {
         agreementRepository.save(agreement);
     }
 
-    public Agreement getAgreementByAgreementNumber(UUID agreementNumber) {
+    public Agreement getAgreementByAgreementNumber(String agreementNumber) {
         return agreementRepository.findById(agreementNumber).orElseThrow(AgreementNotFoundException::new);
     }
 
     public void activateAgreement(DisbursementRequest request) {
-        Agreement agreement = agreementRepository.findById(UUID.fromString(request.getAgreementNumber()))
+        Agreement agreement = agreementRepository.findById(request.getAgreementNumber())
                 .orElseThrow(AgreementNotFoundException::new);
         agreement.setStatus(AgreementStatus.ACTIVE.getStatus());
         agreement.setDisbursementDate(fromGoogleTimestampToLocalDateTime(request.getPaymentDate()));

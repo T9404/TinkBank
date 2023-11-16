@@ -5,6 +5,7 @@ import com.academy.fintech.pe.core.service.agreement.db.agreement.AgreementRepos
 import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule.PaymentSchedule;
 import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule.PaymentScheduleRepository;
 import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePaymentRepository;
+import com.academy.fintech.pe.core.service.agreement.db.product.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -40,13 +41,12 @@ public class PaymentScheduleRepositoryTest {
 
     @Test
     public void testSavePayment() {
-        Agreement agreement = new Agreement();
-        agreement.setId(UUID.randomUUID());
+        Agreement agreement = createAgreement();
         agreementRepository.save(agreement);
 
         PaymentSchedule payment = new PaymentSchedule();
         payment.setId(agreement.getId());
-        payment.setAgreementNumber(UUID.randomUUID());
+        payment.setAgreement(agreement);
         payment.setVersion(1);
         paymentScheduleRepository.save(payment);
 
@@ -56,8 +56,7 @@ public class PaymentScheduleRepositoryTest {
     @Test
     public void testSavePaymentWithInvalidAgreementNumber() {
         PaymentSchedule payment = new PaymentSchedule();
-        payment.setAgreementNumber(UUID.randomUUID());
-        payment.setVersion(1);
+        payment.setId(String.valueOf(UUID.randomUUID()));
         paymentScheduleRepository.save(payment);
 
         assertThrows(DataIntegrityViolationException.class, () -> paymentScheduleRepository.count());
@@ -66,7 +65,7 @@ public class PaymentScheduleRepositoryTest {
     @Test
     public void testSavePaymentWithInvalidData() {
         PaymentSchedule payment = new PaymentSchedule();
-        payment.setId(UUID.randomUUID());
+        payment.setId(String.valueOf(UUID.randomUUID()));
         paymentScheduleRepository.save(payment);
 
         assertThrows(DataIntegrityViolationException.class, () -> paymentScheduleRepository.count());
@@ -74,18 +73,17 @@ public class PaymentScheduleRepositoryTest {
 
     @Test
     public void findByInvalidAgreementNumber() {
-        assert (paymentScheduleRepository.findById(UUID.randomUUID()).isEmpty());
+        assert (paymentScheduleRepository.findById(String.valueOf(UUID.randomUUID())).isEmpty());
     }
 
     @Test
     public void findById() {
-        Agreement agreement = new Agreement();
-        agreement.setId(UUID.randomUUID());
+        Agreement agreement = createAgreement();
         agreementRepository.save(agreement);
 
         PaymentSchedule payment = new PaymentSchedule();
         payment.setId(agreement.getId());
-        payment.setAgreementNumber(UUID.randomUUID());
+        payment.setAgreement(agreement);
         payment.setVersion(1);
         paymentScheduleRepository.save(payment);
 
@@ -94,18 +92,32 @@ public class PaymentScheduleRepositoryTest {
 
     @Test
     public void testDelete() {
-        Agreement agreement = new Agreement();
-        agreement.setId(UUID.randomUUID());
+        Agreement agreement = createAgreement();
         agreementRepository.save(agreement);
 
         PaymentSchedule payment = new PaymentSchedule();
         payment.setId(agreement.getId());
-        payment.setAgreementNumber(UUID.randomUUID());
+        payment.setAgreement(agreement);
         payment.setVersion(1);
 
         paymentScheduleRepository.save(payment);
         paymentScheduleRepository.delete(payment);
 
         assert (paymentScheduleRepository.findById(payment.getId()).isEmpty());
+    }
+
+    private Agreement createAgreement() {
+        Product product = createProduct();
+
+        Agreement agreement = new Agreement();
+        agreement.setId(String.valueOf(UUID.randomUUID()));
+        agreement.setProduct(product);
+        return agreement;
+    }
+
+    private Product createProduct() {
+        Product product = new Product();
+        product.setCode("CL 1.1.10");
+        return product;
     }
 }

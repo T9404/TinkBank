@@ -25,6 +25,8 @@ import proto.DisbursementResponse;
 
 import java.util.UUID;
 
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
@@ -76,7 +78,11 @@ public class AgreementTest {
                 .setDisbursementAmount(490000)
                 .setOriginationAmount(10000)
                 .build());
-        assertAll(() -> UUID.fromString(response.getAgreementNumber()));
+
+        assertAll(
+                () -> assertTrue(response.getAgreementNumber().startsWith("CL1.0-")),
+                () -> UUID.fromString(response.getAgreementNumber().substring(6))
+        );
     }
 
     @Test

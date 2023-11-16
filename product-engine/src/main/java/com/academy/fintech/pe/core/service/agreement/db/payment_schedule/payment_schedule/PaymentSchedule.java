@@ -1,10 +1,14 @@
 package com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,14 +21,21 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "payment_schedule")
 public class PaymentSchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @Column(name = "id")
+    private String id;
 
-    @Column(nullable = false)
-    private UUID agreementNumber;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "agreement_id", referencedColumnName = "id")
+    private Agreement agreement;
 
-    @Column(nullable = false)
+    @Column(name = "version", nullable = false)
     private int version;
+
+    @PrePersist
+    public void prePersist() {
+        id = UUID.randomUUID().toString();
+    }
 }

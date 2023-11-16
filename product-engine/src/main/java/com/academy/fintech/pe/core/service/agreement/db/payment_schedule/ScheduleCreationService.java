@@ -12,7 +12,6 @@ import proto.DisbursementRequest;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 public class ScheduleCreationService {
@@ -38,9 +37,8 @@ public class ScheduleCreationService {
     public void generateInitialPaymentGraphic(DisbursementRequest request) {
         LocalDateTime disbursementLocalDate = ProtobufConverter.fromGoogleTimestampToLocalDateTime(request.getPaymentDate());
         Timestamp disbursementTimestamp = Timestamp.valueOf(disbursementLocalDate);
-        UUID agreementNumber = UUID.fromString(request.getAgreementNumber());
 
-        Agreement agreement = agreementService.getAgreementByAgreementNumber(agreementNumber);
+        Agreement agreement = agreementService.getAgreementByAgreementNumber(request.getAgreementNumber());
         PaymentSchedule paymentSchedule = paymentScheduleService.savePaymentSchedule(agreement);
         paymentSchedulePaymentService.savePaymentSchedulePayment(agreement, disbursementTimestamp, paymentSchedule);
     }

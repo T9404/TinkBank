@@ -14,7 +14,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class PaymentSchedulePaymentService {
@@ -49,7 +48,7 @@ public class PaymentSchedulePaymentService {
             balance = balance.subtract(principalPayment);
             Timestamp nextPaymentDate = AgreementCalculator.calculateNextPaymentDate(disbursementDate, i);
 
-            PaymentSchedulePayment payment = buildPayment(paymentSchedule.getId(), nextPaymentDate.toLocalDateTime(),
+            PaymentSchedulePayment payment = buildPayment(paymentSchedule, nextPaymentDate.toLocalDateTime(),
                     monthlyPayment, interestPayment, principalPayment, i + 1);
             payments.add(payment);
         }
@@ -57,10 +56,10 @@ public class PaymentSchedulePaymentService {
         return payments;
     }
 
-    private PaymentSchedulePayment buildPayment(UUID paymentScheduleId, LocalDateTime paymentDate, BigDecimal periodPayment,
+    private PaymentSchedulePayment buildPayment(PaymentSchedule paymentSchedule, LocalDateTime paymentDate, BigDecimal periodPayment,
                                                 BigDecimal interestPayment, BigDecimal principalPayment, int periodNumber) {
         return PaymentSchedulePayment.builder()
-                .paymentScheduleId(paymentScheduleId)
+                .paymentSchedule(paymentSchedule)
                 .paymentDate(paymentDate)
                 .periodPayment(periodPayment)
                 .interestPayment(interestPayment)

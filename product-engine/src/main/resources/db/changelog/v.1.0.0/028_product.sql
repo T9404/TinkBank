@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS product (
 );
 
 INSERT INTO product (code, min_term, max_term, min_principal_amount, max_principal_amount, min_interest, max_interest, min_origination_amount, max_origination_amount)
-VALUES ('CL 1.0', 3, 24, 50000, 500000, 8, 15, 2000, 10000);
+VALUES ('CL1.0', 3, 24, 50000, 500000, 8, 15, 2000, 10000);

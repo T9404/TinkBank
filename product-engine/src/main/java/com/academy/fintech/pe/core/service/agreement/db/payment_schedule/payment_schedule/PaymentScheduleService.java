@@ -4,7 +4,7 @@ import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class PaymentScheduleService {
@@ -16,16 +16,18 @@ public class PaymentScheduleService {
     }
 
     public PaymentSchedule savePaymentSchedule(Agreement agreement) {
-        int version = determineNumberOfPaymentVersions(agreement.getId());
+        int version = determineNumberOfPaymentVersions(agreement);
         PaymentSchedule paymentSchedule = new PaymentSchedule();
-        paymentSchedule.setAgreementNumber(agreement.getId());
+        paymentSchedule.setAgreement(agreement);
         paymentSchedule.setVersion(version);
         paymentScheduleRepository.save(paymentSchedule);
         return paymentSchedule;
     }
 
-    public int determineNumberOfPaymentVersions(UUID agreementNumber) {
-        int latestVersion = paymentScheduleRepository.getLatestVersionByAgreementNumber(agreementNumber).orElse(0);
+    public int determineNumberOfPaymentVersions(Agreement agreement) {
+        Optional<PaymentSchedule> latestPaymentScheduleOptional =
+                paymentScheduleRepository.findFirstByAgreementOrderByVersionDesc(agreement);
+        int latestVersion = latestPaymentScheduleOptional.map(PaymentSchedule::getVersion).orElse(0);
         return latestVersion + 1;
     }
 }

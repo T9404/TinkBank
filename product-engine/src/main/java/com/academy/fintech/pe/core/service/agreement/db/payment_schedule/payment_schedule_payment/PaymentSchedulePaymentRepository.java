@@ -4,9 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface PaymentSchedulePaymentRepository extends JpaRepository<PaymentSchedulePayment, UUID> {
-    List<PaymentSchedulePayment> findByPaymentScheduleId(UUID paymentScheduleId);
+public interface PaymentSchedulePaymentRepository extends JpaRepository<PaymentSchedulePayment, String> {
+    List<PaymentSchedulePayment> findByPaymentScheduleId(String paymentScheduleId);
 }

@@ -1,14 +1,18 @@
 package com.academy.fintech.pe.core.service.agreement.db.agreement;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import com.academy.fintech.pe.core.service.agreement.db.product.Product;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.PrePersist;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 
 import java.math.BigDecimal;
@@ -17,39 +21,46 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "agreement")
 public class Agreement {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @Column(name = "id")
+    private String id;
 
-    @Column(nullable = false)
-    private String productCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_code", referencedColumnName = "code")
+    private Product product;
 
-    @Column(nullable = false)
-    private UUID clientId;
+    @Column(name = "client_id", nullable = false)
+    private String clientId;
 
-    @Column(nullable = false)
+    @Column(name = "interest", nullable = false)
     private BigDecimal interest;
 
-    @Column(nullable = false)
+    @Column(name = "term", nullable = false)
     private int term;
 
-    @Column(nullable = false)
+    @Column(name = "principal_amount", nullable = false)
     private BigDecimal principalAmount;
 
-    @Column(nullable = false)
+    @Column(name = "origination_amount", nullable = false)
     private BigDecimal originationAmount;
 
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
-    @Column
+    @Column(name = "disbursement_date")
     private LocalDateTime disbursementDate;
 
-    @Column
+    @Column(name = "next_payment_date")
     private LocalDateTime nextPaymentDate;
+
+    @PrePersist
+    public void prePersist() {
+        id = product.getCode() + "-" + UUID.randomUUID();
+    }
 }

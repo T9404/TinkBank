@@ -30,13 +30,13 @@ public class AgreementCreationService {
     }
 
     public String createAgreement(AgreementRequest request) {
-        Agreement agreement = convertAgreementRequestToEntity(request);
+        Product product = productService.getProductByCode(request.getProductCode() + request.getProductVersion());
 
-        Product product = productService.getProductByCode(agreement.getProductCode());
+        Agreement agreement = convertAgreementRequestToEntity(request, product);
         AgreementCreationValidator.checkAgreementValidity(agreement, product);
         agreementService.saveAgreement(agreement);
 
         logger.info("Agreement created successfully: {}", agreement);
-        return agreement.getId().toString();
+        return agreement.getId();
     }
 }

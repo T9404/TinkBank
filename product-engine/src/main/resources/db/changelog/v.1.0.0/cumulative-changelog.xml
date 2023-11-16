@@ -8,9 +8,9 @@
         <tagDatabase tag="v.1.0.0"/>
     </changeSet>
 
-    <include file="020_product.sql" relativeToChangelogFile="true"/>
-    <include file="020_agreement.sql" relativeToChangelogFile="true"/>
-    <include file="020_payment_schedule.sql" relativeToChangelogFile="true"/>
-    <include file="020_payment_schedule_payment.sql" relativeToChangelogFile="true"/>
+    <include file="028_product.sql" relativeToChangelogFile="true"/>
+    <include file="028_agreement.sql" relativeToChangelogFile="true"/>
+    <include file="028_payment_schedule.sql" relativeToChangelogFile="true"/>
+    <include file="028_payment_schedule_payment.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

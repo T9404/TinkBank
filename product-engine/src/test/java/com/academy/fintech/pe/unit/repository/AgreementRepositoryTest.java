@@ -38,7 +38,7 @@ public class AgreementRepositoryTest {
         Product product = createProduct();
         productRepository.save(product);
 
-        Agreement agreement = createAgreement();
+        Agreement agreement = createAgreement(product);
         agreementRepository.save(agreement);
 
         assert (agreementRepository.findById(agreement.getId()).isPresent());
@@ -49,7 +49,7 @@ public class AgreementRepositoryTest {
         Product product = createProduct();
         productRepository.save(product);
 
-        Agreement agreement = createAgreement();
+        Agreement agreement = createAgreement(product);
         agreementRepository.save(agreement);
 
         assert (agreementRepository.findById(agreement.getId()).isPresent());
@@ -57,7 +57,7 @@ public class AgreementRepositoryTest {
 
     @Test
     public void testFindByAgreementNumberNotFound() {
-        assert (agreementRepository.findById(UUID.randomUUID()).isEmpty());
+        assert (agreementRepository.findById(String.valueOf(UUID.randomUUID())).isEmpty());
     }
 
     @Test
@@ -65,17 +65,17 @@ public class AgreementRepositoryTest {
         Product product = createProduct();
         productRepository.save(product);
 
-        Agreement agreement = createAgreement();
+        Agreement agreement = createAgreement(product);
         agreementRepository.save(agreement);
 
         agreementRepository.delete(agreement);
         assert (agreementRepository.findById(agreement.getId()).isEmpty());
     }
 
-    private Agreement createAgreement() {
+    private Agreement createAgreement(Product product) {
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0.1.1.1");
-        agreement.setClientId(UUID.fromString("e58ed763-928c-4155-bee9-fdbaaadc15f3"));
+        agreement.setProduct(product);
+        agreement.setClientId("e58ed763-928c-4155-bee9-fdbaaadc15f3");
         agreement.setInterest(new BigDecimal(8));
         agreement.setTerm(12);
         agreement.setOriginationAmount(new BigDecimal(10000));

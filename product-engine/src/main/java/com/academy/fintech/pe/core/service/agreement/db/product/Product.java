@@ -1,8 +1,9 @@
 package com.academy.fintech.pe.core.service.agreement.db.product;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,31 +16,34 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "product")
 public class Product {
+
     @Id
+    @Column(name = "code")
     private String code;
 
-    @Column(nullable = false)
+    @Column(name = "min_term", nullable = false)
     private int minTerm;
 
-    @Column(nullable = false)
+    @Column(name = "max_term", nullable = false)
     private int maxTerm;
 
-    @Column(nullable = false)
+    @Column(name = "min_principal_amount", nullable = false)
     private BigDecimal minPrincipalAmount;
 
-    @Column(nullable = false)
+    @Column(name = "max_principal_amount", nullable = false)
     private BigDecimal maxPrincipalAmount;
 
-    @Column(nullable = false)
+    @Column(name = "min_interest", nullable = false)
     private BigDecimal minInterest;
 
-    @Column(nullable = false)
+    @Column(name = "max_interest", nullable = false)
     private BigDecimal maxInterest;
 
-    @Column(nullable = false)
+    @Column(name = "min_origination_amount", nullable = false)
     private BigDecimal minOriginationAmount;
 
-    @Column(nullable = false)
+    @Column(name = "max_origination_amount", nullable = false)
     private BigDecimal maxOriginationAmount;
 }

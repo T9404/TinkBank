@@ -18,8 +18,8 @@ public class AgreementCreationValidatorTest {
         Product product = getProduct();
 
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0");
-        agreement.setClientId(UUID.randomUUID());
+        agreement.setProduct(product);
+        agreement.setClientId(String.valueOf(UUID.randomUUID()));
         agreement.setInterest(new BigDecimal("8"));
         agreement.setTerm(12);
         agreement.setPrincipalAmount(new BigDecimal("500000"));
@@ -34,8 +34,8 @@ public class AgreementCreationValidatorTest {
         Product product = getProduct();
 
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0");
-        agreement.setClientId(UUID.randomUUID());
+        agreement.setProduct(product);
+        agreement.setClientId(String.valueOf(UUID.randomUUID()));
         agreement.setInterest(new BigDecimal("8"));
         agreement.setTerm(11);
         agreement.setPrincipalAmount(new BigDecimal("500000"));
@@ -50,8 +50,8 @@ public class AgreementCreationValidatorTest {
         Product product = getProduct();
 
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0");
-        agreement.setClientId(UUID.randomUUID());
+        agreement.setProduct(product);
+        agreement.setClientId(String.valueOf(UUID.randomUUID()));
         agreement.setInterest(new BigDecimal("8"));
         agreement.setTerm(25);
         agreement.setPrincipalAmount(new BigDecimal("500000"));
@@ -66,8 +66,8 @@ public class AgreementCreationValidatorTest {
         Product product = getProduct();
 
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0");
-        agreement.setClientId(UUID.randomUUID());
+        agreement.setProduct(product);
+        agreement.setClientId(String.valueOf(UUID.randomUUID()));
         agreement.setInterest(new BigDecimal("8"));
         agreement.setTerm(12);
         agreement.setPrincipalAmount(new BigDecimal("499999"));
@@ -82,8 +82,8 @@ public class AgreementCreationValidatorTest {
         Product product = getProduct();
 
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0");
-        agreement.setClientId(UUID.randomUUID());
+        agreement.setProduct(product);
+        agreement.setClientId(String.valueOf(UUID.randomUUID()));
         agreement.setInterest(new BigDecimal("8"));
         agreement.setTerm(12);
         agreement.setPrincipalAmount(new BigDecimal("1000001"));
@@ -98,8 +98,8 @@ public class AgreementCreationValidatorTest {
         Product product = getProduct();
 
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0");
-        agreement.setClientId(UUID.randomUUID());
+        agreement.setProduct(product);
+        agreement.setClientId(String.valueOf(UUID.randomUUID()));
         agreement.setInterest(new BigDecimal("7.99"));
         agreement.setTerm(12);
         agreement.setPrincipalAmount(new BigDecimal("500000"));
@@ -114,8 +114,8 @@ public class AgreementCreationValidatorTest {
         Product product = getProduct();
 
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0");
-        agreement.setClientId(UUID.randomUUID());
+        agreement.setProduct(product);
+        agreement.setClientId(String.valueOf(UUID.randomUUID()));
         agreement.setInterest(new BigDecimal("12.01"));
         agreement.setTerm(12);
         agreement.setPrincipalAmount(new BigDecimal("500000"));
@@ -130,8 +130,8 @@ public class AgreementCreationValidatorTest {
         Product product = getProduct();
 
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0");
-        agreement.setClientId(UUID.randomUUID());
+        agreement.setProduct(product);
+        agreement.setClientId(String.valueOf(UUID.randomUUID()));
         agreement.setInterest(new BigDecimal("8"));
         agreement.setTerm(12);
         agreement.setPrincipalAmount(new BigDecimal("500000"));
@@ -146,8 +146,8 @@ public class AgreementCreationValidatorTest {
         Product product = getProduct();
 
         Agreement agreement = new Agreement();
-        agreement.setProductCode("CL 1.0");
-        agreement.setClientId(UUID.randomUUID());
+        agreement.setProduct(product);
+        agreement.setClientId(String.valueOf(UUID.randomUUID()));
         agreement.setInterest(new BigDecimal("8"));
         agreement.setTerm(12);
         agreement.setPrincipalAmount(new BigDecimal("500000"));
