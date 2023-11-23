@@ -14,5 +14,4 @@ public class ApplicationService {
     public String createApplication(ApplicationDto applicationDto) {
         return originationClientService.createApplication(applicationDto);
     }
-
 }

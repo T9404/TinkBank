@@ -2,6 +2,7 @@ package com.academy.fintech.pe.core.service.agreement.db.agreement;
 
 import com.academy.fintech.pe.core.service.agreement.db.agreement.enums.AgreementStatus;
 import com.academy.fintech.pe.core.service.agreement.exception.AgreementNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -11,13 +12,10 @@ import proto.DisbursementRequest;
 import static com.academy.fintech.pe.core.service.agreement.util.ProtobufConverter.fromGoogleTimestampToLocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class AgreementService {
     private static final Logger logger = LoggerFactory.getLogger(AgreementService.class);
     private final AgreementRepository agreementRepository;
-
-    public AgreementService(AgreementRepository agreementRepository) {
-        this.agreementRepository = agreementRepository;
-    }
 
     public void saveAgreement(Agreement agreement) {
         agreementRepository.save(agreement);

@@ -6,6 +6,7 @@ import com.academy.fintech.pe.core.service.agreement.db.product.Product;
 import com.academy.fintech.pe.core.service.agreement.db.product.ProductService;
 import com.academy.fintech.pe.core.service.agreement.validation.AgreementCreationValidator;
 import com.example.agreement.AgreementRequest;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,11 @@ import org.springframework.stereotype.Service;
 import static com.academy.fintech.pe.core.service.agreement.mapper.AgreementMapper.convertAgreementRequestToEntity;
 
 @Service
+@RequiredArgsConstructor
 public class AgreementCreationService {
     private static final Logger logger = LoggerFactory.getLogger(AgreementCreationService.class);
     private final AgreementService agreementService;
     private final ProductService productService;
-
-    @Autowired
-    public AgreementCreationService(AgreementService agreementService, ProductService productService) {
-        this.agreementService = agreementService;
-        this.productService = productService;
-    }
 
     public String createAgreement(AgreementRequest request) {
         Product product = productService.getProductByCode(request.getProductCode() + request.getProductVersion());

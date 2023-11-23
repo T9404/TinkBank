@@ -17,6 +17,9 @@ dependencies {
     implementation libs.grps.stub
     compileOnly libs.tomcat.annotations.api
     implementation libs.grpc.client.spring.boot.starter
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
 }
 
 protobuf {

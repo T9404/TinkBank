@@ -1,18 +1,16 @@
 package com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule;
 
 import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PaymentScheduleService {
     private final PaymentScheduleRepository paymentScheduleRepository;
-
-    public PaymentScheduleService(PaymentScheduleRepository paymentScheduleRepository) {
-        this.paymentScheduleRepository = paymentScheduleRepository;
-    }
 
     public PaymentSchedule savePaymentSchedule(Agreement agreement) {
         int version = determineNumberOfPaymentVersions(agreement);
