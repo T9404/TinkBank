@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.core.service.agreement.util;
+package com.academy.fintech.pe.core.service.agreement.mapper;
 
 import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
 import com.academy.fintech.pe.core.service.agreement.db.agreement.enums.AgreementStatus;

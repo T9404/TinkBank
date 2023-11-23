@@ -11,21 +11,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.academy.fintech.pe.core.service.agreement.util.AgreementMapper.convertAgreementRequestToEntity;
+import static com.academy.fintech.pe.core.service.agreement.mapper.AgreementMapper.convertAgreementRequestToEntity;
 
 @Service
 public class AgreementCreationService {
     private static final Logger logger = LoggerFactory.getLogger(AgreementCreationService.class);
-    private AgreementService agreementService;
-    private ProductService productService;
+    private final AgreementService agreementService;
+    private final ProductService productService;
 
     @Autowired
-    public void setAgreementService(AgreementService agreementService) {
+    public AgreementCreationService(AgreementService agreementService, ProductService productService) {
         this.agreementService = agreementService;
-    }
-
-    @Autowired
-    public void setProductService(ProductService productService) {
         this.productService = productService;
     }
 

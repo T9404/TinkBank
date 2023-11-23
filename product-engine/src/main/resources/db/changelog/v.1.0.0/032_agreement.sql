@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS agreement (
+CREATE TABLE IF NOT EXISTS agreements (
     id VARCHAR(255) PRIMARY KEY,
     product_code VARCHAR NOT NULL REFERENCES product(code),
     client_id VARCHAR(255) NOT NULL,

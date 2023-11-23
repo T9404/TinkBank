@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.integration;
+package com.academy.fintech.pe.integration.testcontainer;
 
 import com.academy.fintech.pe.Application;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;

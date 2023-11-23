@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.unit.repository;
+package com.academy.fintech.pe.integration.repository;
 
 import com.academy.fintech.pe.core.service.agreement.db.product.Product;
 import com.academy.fintech.pe.core.service.agreement.db.product.ProductRepository;
@@ -12,6 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -30,7 +32,7 @@ public class  ProductRepositoryTest {
     public void testSave() {
         Product product = createProduct();
         productRepository.save(product);
-        assert (productRepository.findByCode("CL 1.1.10").isPresent());
+        assertTrue(productRepository.findByCode("CL 1.1.10").isPresent());
     }
 
     @Test
@@ -38,13 +40,13 @@ public class  ProductRepositoryTest {
         Product product = createProduct();
         productRepository.save(product);
         Optional<Product> productOptional = productRepository.findByCode(product.getCode());
-        assert (productOptional.isPresent());
+        assertTrue(productOptional.isPresent());
     }
 
     @Test
     public void testFindByIdNotFound() {
         Optional<Product> productOptional = productRepository.findByCode("CL 2.0");
-        assert (productOptional.isEmpty());
+        assertTrue(productOptional.isEmpty());
     }
 
     @Test
@@ -52,7 +54,7 @@ public class  ProductRepositoryTest {
         Product product = createProduct();
         productRepository.save(product);
         productRepository.deleteByCode(product.getCode());
-        assert (productRepository.findByCode(product.getCode()).isEmpty());
+        assertTrue(productRepository.findByCode(product.getCode()).isEmpty());
     }
 
     private Product createProduct() {

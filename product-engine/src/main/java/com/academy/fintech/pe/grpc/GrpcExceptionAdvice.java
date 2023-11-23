@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.grps;
+package com.academy.fintech.pe.grpc;
 
 import com.academy.fintech.pe.core.service.agreement.exception.AgreementNotFoundException;
 import com.academy.fintech.pe.core.service.agreement.exception.AgreementValidationException;

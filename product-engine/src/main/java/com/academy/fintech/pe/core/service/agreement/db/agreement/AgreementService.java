@@ -5,6 +5,7 @@ import com.academy.fintech.pe.core.service.agreement.exception.AgreementNotFound
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import proto.DisbursementRequest;
 
 import static com.academy.fintech.pe.core.service.agreement.util.ProtobufConverter.fromGoogleTimestampToLocalDateTime;
@@ -26,6 +27,7 @@ public class AgreementService {
         return agreementRepository.findById(agreementNumber).orElseThrow(AgreementNotFoundException::new);
     }
 
+    @Transactional
     public void activateAgreement(DisbursementRequest request) {
         Agreement agreement = agreementRepository.findById(request.getAgreementNumber())
                 .orElseThrow(AgreementNotFoundException::new);

@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.unit.repository;
+package com.academy.fintech.pe.integration.repository;
 
 import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
 import com.academy.fintech.pe.core.service.agreement.db.agreement.AgreementRepository;
@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -41,7 +43,7 @@ public class AgreementRepositoryTest {
         Agreement agreement = createAgreement(product);
         agreementRepository.save(agreement);
 
-        assert (agreementRepository.findById(agreement.getId()).isPresent());
+        assertTrue(agreementRepository.findById(agreement.getId()).isPresent());
     }
 
     @Test
@@ -52,12 +54,12 @@ public class AgreementRepositoryTest {
         Agreement agreement = createAgreement(product);
         agreementRepository.save(agreement);
 
-        assert (agreementRepository.findById(agreement.getId()).isPresent());
+        assertTrue(agreementRepository.findById(agreement.getId()).isPresent());
     }
 
     @Test
     public void testFindByAgreementNumberNotFound() {
-        assert (agreementRepository.findById(String.valueOf(UUID.randomUUID())).isEmpty());
+        assertTrue(agreementRepository.findById(UUID.randomUUID().toString()).isEmpty());
     }
 
     @Test
@@ -69,7 +71,7 @@ public class AgreementRepositoryTest {
         agreementRepository.save(agreement);
 
         agreementRepository.delete(agreement);
-        assert (agreementRepository.findById(agreement.getId()).isEmpty());
+        assertTrue(agreementRepository.findById(agreement.getId()).isEmpty());
     }
 
     private Agreement createAgreement(Product product) {

@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.unit.repository;
+package com.academy.fintech.pe.integration.repository;
 
 import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
 import com.academy.fintech.pe.core.service.agreement.db.agreement.enums.AgreementStatus;
@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -50,7 +51,7 @@ public class PaymentSchedulePaymentRepositoryTest {
         paymentSchedule.setVersion(1);
         paymentScheduleRepository.save(paymentSchedule);
 
-        assert (paymentScheduleRepository.findById(paymentSchedule.getId()).isPresent());
+        assertTrue(paymentScheduleRepository.findById(paymentSchedule.getId()).isPresent());
     }
 
     @Test
@@ -64,7 +65,7 @@ public class PaymentSchedulePaymentRepositoryTest {
         paymentSchedule.setVersion(1);
         paymentScheduleRepository.save(paymentSchedule);
 
-        assert (paymentScheduleRepository.findById(paymentSchedule.getId()).isPresent());
+        assertTrue(paymentScheduleRepository.findById(paymentSchedule.getId()).isPresent());
         paymentScheduleRepository.delete(paymentSchedule);
 
         assertAll(() -> assertFalse(paymentScheduleRepository.findById(paymentSchedule.getId()).isPresent()));
@@ -74,7 +75,7 @@ public class PaymentSchedulePaymentRepositoryTest {
     public void testFindByPaymentScheduleIdNotFound() {
         List<PaymentSchedulePayment> paymentSchedulePaymentList = paymentSchedulePaymentRepository
                 .findByPaymentScheduleId(String.valueOf(UUID.randomUUID()));
-        assert (paymentSchedulePaymentList.isEmpty());
+        assertTrue(paymentSchedulePaymentList.isEmpty());
     }
 
     private Agreement createAgreement(Product product) {

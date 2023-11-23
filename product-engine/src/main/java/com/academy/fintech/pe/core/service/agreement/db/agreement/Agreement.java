@@ -25,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "agreement")
+@Table(name = "agreements")
 public class Agreement {
     @Id
     @Column(name = "id")

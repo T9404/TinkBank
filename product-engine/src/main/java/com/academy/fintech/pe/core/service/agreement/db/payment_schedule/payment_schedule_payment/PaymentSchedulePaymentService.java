@@ -2,6 +2,7 @@ package com.academy.fintech.pe.core.service.agreement.db.payment_schedule.paymen
 
 import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
 import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule.PaymentSchedule;
+import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.dto.PaymentScheduleDto;
 import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.enums.PaymentStatus;
 import com.academy.fintech.pe.core.service.agreement.util.AgreementCalculator;
 import org.slf4j.Logger;
@@ -18,10 +19,9 @@ import java.util.List;
 @Service
 public class PaymentSchedulePaymentService {
     private static final Logger logger = LoggerFactory.getLogger(PaymentSchedulePaymentService.class);
-    private PaymentSchedulePaymentRepository paymentSchedulePaymentRepository;
+    private final PaymentSchedulePaymentRepository paymentSchedulePaymentRepository;
 
-    @Autowired
-    public void setPaymentSchedulePaymentRepository(PaymentSchedulePaymentRepository paymentSchedulePaymentRepository) {
+    public PaymentSchedulePaymentService(PaymentSchedulePaymentRepository paymentSchedulePaymentRepository) {
         this.paymentSchedulePaymentRepository = paymentSchedulePaymentRepository;
     }
 
@@ -33,27 +33,31 @@ public class PaymentSchedulePaymentService {
 
     private List<PaymentSchedulePayment> calculatePayments(Agreement agreement, Timestamp disbursementDate, PaymentSchedule paymentSchedule) {
         int numberOfPeriods = agreement.getTerm();
-        BigDecimal principal = agreement.getPrincipalAmount();
-        BigDecimal annualInterestRate = agreement.getInterest();
-        BigDecimal totalInterestPayment = BigDecimal.ZERO;
-        BigDecimal balance = agreement.getPrincipalAmount();
-        BigDecimal monthlyPayment = AgreementCalculator.calculatePMT(principal, annualInterestRate, numberOfPeriods);
+        PaymentScheduleDto paymentScheduleDto = initializePaymentScheduleDto(agreement);
         List<PaymentSchedulePayment> payments = new ArrayList<>();
 
-        for (int i = 0; i < numberOfPeriods; i++) {
-            BigDecimal interestPayment = AgreementCalculator.calculateIPMT(principal, annualInterestRate, numberOfPeriods, i + 1);
-            BigDecimal principalPayment = AgreementCalculator.calculatePPMT(principal, annualInterestRate, numberOfPeriods, i + 1);
-
-            totalInterestPayment = totalInterestPayment.add(interestPayment);
-            balance = balance.subtract(principalPayment);
-            Timestamp nextPaymentDate = AgreementCalculator.calculateNextPaymentDate(disbursementDate, i);
+        for (int periodNumber = 0; periodNumber < numberOfPeriods; periodNumber++) {
+            BigDecimal interestPayment = AgreementCalculator.calculateIPMT(paymentScheduleDto.principalPayment(),
+                    paymentScheduleDto.annualInterestRate(), numberOfPeriods, periodNumber + 1);
+            BigDecimal principalPayment = AgreementCalculator.calculatePPMT(paymentScheduleDto.principalPayment(),
+                    paymentScheduleDto.annualInterestRate(), numberOfPeriods, periodNumber + 1);
+            Timestamp nextPaymentDate = AgreementCalculator.calculateNextPaymentDate(disbursementDate, periodNumber);
 
             PaymentSchedulePayment payment = buildPayment(paymentSchedule, nextPaymentDate.toLocalDateTime(),
-                    monthlyPayment, interestPayment, principalPayment, i + 1);
+                    paymentScheduleDto.monthlyPayment(), interestPayment, principalPayment, periodNumber + 1);
             payments.add(payment);
         }
 
         return payments;
+    }
+
+    private PaymentScheduleDto initializePaymentScheduleDto(Agreement agreement) {
+        int numberOfPeriods = agreement.getTerm();
+        BigDecimal principal = agreement.getPrincipalAmount();
+        BigDecimal annualInterestRate = agreement.getInterest();
+        BigDecimal balance = agreement.getPrincipalAmount();
+        BigDecimal monthlyPayment = AgreementCalculator.calculatePMT(principal, annualInterestRate, numberOfPeriods);
+        return new PaymentScheduleDto(monthlyPayment, annualInterestRate, balance);
     }
 
     private PaymentSchedulePayment buildPayment(PaymentSchedule paymentSchedule, LocalDateTime paymentDate, BigDecimal periodPayment,

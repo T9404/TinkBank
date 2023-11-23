@@ -8,10 +8,9 @@ import java.util.Optional;
 
 @Service
 public class PaymentScheduleService {
-    private PaymentScheduleRepository paymentScheduleRepository;
+    private final PaymentScheduleRepository paymentScheduleRepository;
 
-    @Autowired
-    public void setPaymentScheduleRepository(PaymentScheduleRepository paymentScheduleRepository) {
+    public PaymentScheduleService(PaymentScheduleRepository paymentScheduleRepository) {
         this.paymentScheduleRepository = paymentScheduleRepository;
     }
 
@@ -24,7 +23,7 @@ public class PaymentScheduleService {
         return paymentSchedule;
     }
 
-    public int determineNumberOfPaymentVersions(Agreement agreement) {
+    private int determineNumberOfPaymentVersions(Agreement agreement) {
         Optional<PaymentSchedule> latestPaymentScheduleOptional =
                 paymentScheduleRepository.findFirstByAgreementOrderByVersionDesc(agreement);
         int latestVersion = latestPaymentScheduleOptional.map(PaymentSchedule::getVersion).orElse(0);

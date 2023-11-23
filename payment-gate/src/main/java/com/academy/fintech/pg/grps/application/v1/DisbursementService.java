@@ -18,7 +18,7 @@ public class DisbursementService {
     public String disburse(DisbursementDto request) {
         Timestamp timestamp = convertLocalDateTimeToGoogleTimestamp(request.paymentDate());
         DisbursementRequest disbursementRequest = DisbursementRequest.newBuilder()
-                .setAgreementNumber(request.agreementNumber().toString())
+                .setAgreementNumber(request.agreementNumber())
                 .setPaymentDate(timestamp)
                 .build();
         return disbursementStub.acceptDisbursementProcess(disbursementRequest).getMessage();

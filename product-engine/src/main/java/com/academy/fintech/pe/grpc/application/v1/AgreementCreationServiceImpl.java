@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.grps.application.v1;
+package com.academy.fintech.pe.grpc.application.v1;
 
 import com.academy.fintech.pe.core.service.agreement.AgreementCreationService;
 import com.example.agreement.AgreementRequest;

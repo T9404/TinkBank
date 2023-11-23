@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.integration;
+package com.academy.fintech.pe.integration.testcontainer;
 
 import com.academy.fintech.pe.Application;
 import com.example.agreement.AgreementRequest;
@@ -16,8 +16,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import proto.DisbursementProcessGrpc;
 import proto.DisbursementRequest;
@@ -32,9 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @SpringBootTest
 @ActiveProfiles("test")
 @ContextConfiguration(classes= Application.class)
-@SpringJUnitConfig(classes = { ServiceIntegrationConfig.class })
+@SpringJUnitConfig(classes = { ServiceIntegrationConfig.class, TestContainerConfig.class })
 @Testcontainers
-@DirtiesContext
 public class AgreementTest {
 
     @GrpcClient("stocks")
@@ -42,29 +39,6 @@ public class AgreementTest {
 
     @GrpcClient("stocks")
     private DisbursementProcessGrpc.DisbursementProcessBlockingStub disbursementProcessBlockingStub;
-
-    @Container
-    private static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest")
-            .withDatabaseName("postgres")
-            .withUsername("postgres")
-            .withPassword("postgres");
-
-    @BeforeAll
-    static void startContainers() {
-        postgreSQLContainer.start();
-    }
-
-    @AfterAll
-    static void stopContainers() {
-        postgreSQLContainer.stop();
-    }
-
-    @DynamicPropertySource
-    public static void properties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
-        registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
-        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
-    }
 
     @Test
     @DirtiesContext
