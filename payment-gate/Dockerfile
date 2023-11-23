@@ -1,7 +1,7 @@
-FROM openjdk:22-ea-17-slim
+FROM openjdk:17-ea-22-jdk-oracle
 
-WORKDIR /app
+WORKDIR /app1
 
-COPY /build/libs/*.jar app.jar
+COPY /build/libs/*.jar app1.jar
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app1.jar"]

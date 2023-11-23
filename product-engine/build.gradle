@@ -1,0 +1,69 @@
+plugins {
+    id 'org.springframework.boot' version '3.1.4'
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+    id 'com.google.protobuf' version '0.9.4'
+    id 'org.liquibase.gradle' version '2.0.4'
+    id 'java'
+}
+
+group = 'com.academy.fintech.pe'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation libs.jpa
+    implementation libs.validation
+    implementation libs.liquibase.core
+
+    liquibaseRuntime libs.postgresql
+
+    runtimeOnly libs.postgresql
+
+    testImplementation libs.logback
+
+    runtimeOnly libs.grpc.netty.shaded
+    implementation libs.grpc.protobuf
+    implementation libs.grps.stub
+    compileOnly libs.tomcat.annotations.api
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    implementation libs.grpc.server.spring.boot.starter
+    implementation libs.grpc.client.spring.boot.starter
+    testImplementation libs.jupiter
+    testImplementation libs.spring.boot.starter.test
+
+    testImplementation libs.testcontainers
+    testImplementation libs.jupiter.testcontainers
+    testImplementation libs.postgresql.testcontainers
+
+    runtimeOnly libs.grps.services
+    testImplementation libs.h2database
+    testRuntimeOnly libs.h2database
+    implementation libs.spring.starter.parent
+    testImplementation libs.grps.test
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.22.3"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.59.0'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
