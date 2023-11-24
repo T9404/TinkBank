@@ -1,19 +1,36 @@
 version: '3.8'
+
 services:
-  db:
-    container_name: db
+  db1:
+    container_name: db1
     image: postgres:latest
     restart: always
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=fintech-company,origination
+      - POSTGRES_DB=fintech-company
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123
     ports:
       - '5432:5432'
     volumes:
-      - db:/var/lib/postgresql/data
+      - ./postgres-data1:/var/lib/postgresql/data
     networks:
       - fintech-network
+
+  db2:
+    container_name: db2
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_DB=origination
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+    ports:
+      - '5433:5432'
+    volumes:
+      - ./postgres-data2:/var/lib/postgresql/data
+    networks:
+      - fintech-network
+
 
   product-engine:
     image: docker-image-product-engine
@@ -24,7 +41,20 @@ services:
     ports:
       - '8086:8086'
     depends_on:
-      - db
+      - db1
+    networks:
+      - fintech-network
+
+  origination:
+    image: docker-image-origination
+    build:
+      context: origination
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - '8084:8084'
+    depends_on:
+      - db2
     networks:
       - fintech-network
 
@@ -36,8 +66,17 @@ services:
     restart: always
     ports:
       - '8080:8080'
-    depends_on:
-      - db
+    networks:
+      - fintech-network
+
+  api:
+    image: docker-image-api
+    build:
+      context: api
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - '8083:8083'
     networks:
       - fintech-network
 
