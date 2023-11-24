@@ -5,7 +5,7 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      - POSTGRES_DB=fintech-company
+      - POSTGRES_MULTIPLE_DATABASES=fintech-company,origination
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123
     ports:
