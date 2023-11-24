@@ -4,14 +4,13 @@ import com.academy.fintech.pe.core.service.agreement.AgreementDisbursementServic
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.springframework.beans.factory.annotation.Autowired;
 import proto.DisbursementProcessGrpc;
 import proto.DisbursementRequest;
 import proto.DisbursementResponse;
 
 @GrpcService
 @RequiredArgsConstructor
-public class DisbursementProcessServiceImpl extends DisbursementProcessGrpc.DisbursementProcessImplBase {
+public class DisbursingProcessController extends DisbursementProcessGrpc.DisbursementProcessImplBase {
     private final AgreementDisbursementService agreementDisbursementService;
 
     @Override

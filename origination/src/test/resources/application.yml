@@ -1,4 +1,7 @@
 spring:
+  liquibase:
+    change-log:
+      classpath:db/changelog/db.changelog-master.xml
   datasource:
     url:
       jdbc:postgresql://localhost:5432/origination
@@ -14,25 +17,16 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  liquibase:
-    change-log:
-      classpath:db/changelog/db.changelog-master.xml
   sql:
     init:
       mode: always
 
-server:
-  port: 8084
-
 grpc:
-  port: 9094
-  enable-reflection: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  health:
-    db:
-      enabled: false
+  client:
+    stocks:
+      address: in-process:test
+      enableKeepAlive:
+      negotiationType:
+  server:
+    inProcessName: test
+    port: -1

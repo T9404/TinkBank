@@ -6,6 +6,7 @@ import com.example.agreement.AgreementResponse;
 import com.example.agreement.AgreementServiceGrpc;
 import com.google.protobuf.Timestamp;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,6 @@ public class AgreementTest {
     private DisbursementProcessGrpc.DisbursementProcessBlockingStub disbursementProcessBlockingStub;
 
     @Test
-    @DirtiesContext
     public void testCreationAgreement() {
         AgreementResponse response = agreementServiceBlockingStub.createAgreement(AgreementRequest.newBuilder()
                 .setUserId("e58ed763-928c-4155-bee9-fdbaaadc15f3")
@@ -54,13 +54,12 @@ public class AgreementTest {
                 .build());
 
         assertAll(
-                () -> assertTrue(response.getAgreementNumber().startsWith("CL1.0-")),
+                () -> Assertions.assertTrue(response.getAgreementNumber().startsWith("CL1.0-")),
                 () -> UUID.fromString(response.getAgreementNumber().substring(6))
         );
     }
 
     @Test
-    @DirtiesContext
     public void testDisbursementAgreement() {
         Timestamp timestamp = Timestamp.newBuilder()
                 .setSeconds(1640995200)

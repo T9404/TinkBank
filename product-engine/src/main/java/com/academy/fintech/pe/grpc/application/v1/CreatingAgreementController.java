@@ -7,11 +7,10 @@ import com.example.agreement.AgreementServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @GrpcService
 @RequiredArgsConstructor
-public class AgreementCreationServiceImpl extends AgreementServiceGrpc.AgreementServiceImplBase {
+public class CreatingAgreementController extends AgreementServiceGrpc.AgreementServiceImplBase {
     private final AgreementCreationService agreementCreationService;
 
     @Override

@@ -49,12 +49,8 @@ Following a [hybrid]((https://priyalwalpita.medium.com/software-architecture-pat
 
 JUnit and Mockito were used for unit testing, and Testcontainers was employed for integration testing.
 
-
-
 ## Dependencies
 
 All dependencies used by the project can be found in the `build.gradle` files (both in the root and this module).
 
-
-
-
+You can find the versions of the dependencies in the `gradle/libs.versions.toml` in the root.
