@@ -25,8 +25,9 @@ server:
   port: 8084
 
 grpc:
-  port: 9094
-  enable-reflection: true
+  server:
+    port: 9094
+    enable-reflection: true
 
 management:
   endpoints:

@@ -1,11 +1,11 @@
 package integration.testcontainer;
 
-import com.academy.fintech.origination.CancelApplicationRequest;
-import com.academy.fintech.origination.CancelApplicationResponse;
-import com.academy.fintech.origination.CancelApplicationServiceGrpc;
-import com.academy.fintech.origination.ApplicationRequest;
-import com.academy.fintech.origination.ApplicationResponse;
-import com.academy.fintech.origination.ApplicationServiceGrpc;
+import com.academy.fintech.application.CancelApplicationRequest;
+import com.academy.fintech.application.CancelApplicationResponse;
+import com.academy.fintech.application.CancelApplicationServiceGrpc;
+import com.academy.fintech.application.ApplicationRequest;
+import com.academy.fintech.application.ApplicationResponse;
+import com.academy.fintech.application.ApplicationServiceGrpc;
 import com.academy.fintech.origination.Application;
 import com.academy.fintech.origination.core.service.application.db.application.ApplicationRepository;
 import io.grpc.StatusRuntimeException;

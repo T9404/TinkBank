@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package com.academy.fintech.origination;
+package com.academy.fintech.application;
 
 option java_multiple_files = true;
 

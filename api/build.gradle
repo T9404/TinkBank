@@ -5,6 +5,7 @@ plugins {
 dependencies {
     implementation libs.spring.grpc
     implementation libs.javax.annotation
+    implementation libs.spring.grpc
 
     implementation libs.protobuf.java.util
     implementation libs.grpc.protobuf
