@@ -5,3 +5,5 @@ WORKDIR /app2
 COPY /build/libs/*.jar app2.jar
 
 CMD ["java", "-jar", "app2.jar"]
+
+EXPOSE 9094
