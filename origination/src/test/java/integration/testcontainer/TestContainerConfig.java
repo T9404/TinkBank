@@ -13,9 +13,9 @@ public class TestContainerConfig {
 
     @Container
     private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest")
-            .withDatabaseName("postgres")
+            .withDatabaseName("origination")
             .withUsername("postgres")
-            .withPassword("postgres");
+            .withPassword("123");
 
     @DynamicPropertySource
     public static void configureDatabaseProperties(DynamicPropertyRegistry registry) {

@@ -7,15 +7,10 @@ import com.example.agreement.AgreementServiceGrpc;
 import com.google.protobuf.Timestamp;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import proto.DisbursementProcessGrpc;
@@ -24,8 +19,6 @@ import proto.DisbursementResponse;
 
 import java.util.UUID;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
