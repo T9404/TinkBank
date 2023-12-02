@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.academy.fintech.origination.core.service.application.mapper.ClientMapper.mapToClient;
+
 @Service
 @RequiredArgsConstructor
 public class CreationApplicationService {
@@ -21,27 +23,22 @@ public class CreationApplicationService {
 
     @Transactional
     public String createApplication(ApplicationRequest request) {
-        Client client = buildClient(request);
-        Client clientDb = clientService.saveClient(client);
-        Application application = buildApplication(request, clientDb);
+        Client client = saveClient(request);
+        Application application = buildApplication(request, client);
         try {
-            handleDuplicates(clientDb, application);
+            handleDuplicates(client, application);
             var createdApplication = applicationService.saveApplication(application);
             return createdApplication.getId();
         } catch (StatusRuntimeException exception) {
-            Application existingApplication = applicationService.findApplication(clientDb,
-                    application.getStatus(), application.getRequestedDisbursementAmount()).orElseThrow();
+            Application existingApplication = applicationService.findApplication(client, application.getStatus(),
+                    application.getRequestedDisbursementAmount()).orElseThrow();
             return exception.getTrailers().get(Metadata.Key.of(existingApplication.getId(), Metadata.ASCII_STRING_MARSHALLER));
         }
     }
 
-    private Client buildClient(ApplicationRequest request) {
-        return Client.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .salary(request.getSalary())
-                .build();
+    private Client saveClient(ApplicationRequest request) {
+        Client potentialClient = mapToClient(request);
+        return clientService.saveClient(potentialClient);
     }
 
     private Application buildApplication(ApplicationRequest request, Client client) {

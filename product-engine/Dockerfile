@@ -1,7 +1,7 @@
 FROM openjdk:17-ea-22-jdk-oracle
 
-WORKDIR /app
+WORKDIR /product-engine
 
-COPY /build/libs/*.jar app.jar
+COPY /build/libs/*.jar product-engine.jar
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "product-engine.jar"]
