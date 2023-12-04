@@ -2,9 +2,11 @@ on:
   pull_request:
     branches:
       - master
+      - origination-implement
   push:
     branches:
       - master
+      - origination-implement
 
 jobs:
   build:
