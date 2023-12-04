@@ -1,0 +1,28 @@
+server:
+  port: 8087
+
+grpc:
+  client:
+    grpc-server:
+      address: 'static://localhost:9091'
+      negotiationType: plaintext
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+  server:
+    port: 9095
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    db:
+      enabled: false
+
+late:
+  payment:
+    threshold:
+      days: 7
+
+

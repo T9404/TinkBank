@@ -27,6 +27,7 @@ dependencies {
 
     compileOnly libs.lombok
     annotationProcessor libs.lombok
+    testImplementation libs.logback
 
     implementation libs.grpc.server.spring.boot.starter
     implementation libs.grpc.client.spring.boot.starter

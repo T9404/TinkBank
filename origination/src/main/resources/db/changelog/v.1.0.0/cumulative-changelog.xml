@@ -7,6 +7,6 @@
     <changeSet id="add-tag-1.0.0" author="T9404">
         <tagDatabase tag="v.1.0.0"/>
     </changeSet>
-    <include file="004_client.sql" relativeToChangelogFile="true"/>
-    <include file="004_application.sql" relativeToChangelogFile="true"/>
+    <include file="006_client.sql" relativeToChangelogFile="true"/>
+    <include file="006_application.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

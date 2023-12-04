@@ -26,4 +26,8 @@ public class ApplicationService {
     public Optional<Application> findApplication(Client client, String status, int requestedDisbursementAmount) {
         return applicationRepository.findByClientAndStatusAndRequestedDisbursementAmount(client, status, requestedDisbursementAmount);
     }
+
+    public Iterable<Application> findApplicationsByStatus(String status) {
+        return applicationRepository.findAllByStatus(status);
+    }
 }

@@ -62,8 +62,8 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     environment:
-      - ORIGINATION_GRPC_HOST=product-engine
-      - ORIGINATION_GRPC_PORT=9091
+      - PRODUCT_ENGINE_GRPC_HOST=product-engine
+      - PRODUCT_ENGINE_GRPC_PORT=9091
     ports:
       - '8080:8080'
     networks:
@@ -80,6 +80,20 @@ services:
       - ORIGINATION_GRPC_PORT=9094
     ports:
       - '8083:8083'
+    networks:
+      - fintech-network
+
+  scoring:
+    image: docker-image-scoring
+    build:
+      context: scoring
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+      - PRODUCT_ENGINE_GRPC_HOST=product-engine
+      - PRODUCT_ENGINE_GRPC_PORT=9091
+    ports:
+      - '8087:8087'
     networks:
       - fintech-network
 

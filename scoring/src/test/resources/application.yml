@@ -1,0 +1,18 @@
+grpc:
+  client:
+    stocks:
+      address: in-process:test
+      enableKeepAlive:
+      negotiationType:
+  server:
+    inProcessName: test
+    port: -1
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+late:
+  payment:
+    threshold:
+      days: 7

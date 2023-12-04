@@ -16,6 +16,22 @@ spring:
   sql:
     init:
       mode: always
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            required: true
+
+mail:
+  default-encoding: UTF-8
+  host: smtp.gmail.com
+  username: businessmyhomeq@gmail.com
+  password: ocebvucvtygzckwx
+  port: 587
+  protocol: smtp
+
+
 
 server:
   port: 8084
@@ -24,6 +40,12 @@ grpc:
   server:
     port: 9094
     enable-reflection: true
+  client:
+    grpc-server:
+      address: 'static://localhost:9095'
+      negotiationType: plaintext
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
 
 management:
   endpoints:

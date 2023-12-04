@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import proto.DisbursementRequest;
 
+import java.util.List;
+
 import static com.academy.fintech.pe.core.service.agreement.util.ProtobufConverter.fromGoogleTimestampToLocalDateTime;
 
 @Service
@@ -16,6 +18,10 @@ import static com.academy.fintech.pe.core.service.agreement.util.ProtobufConvert
 public class AgreementService {
     private static final Logger logger = LoggerFactory.getLogger(AgreementService.class);
     private final AgreementRepository agreementRepository;
+
+    public List<Agreement> findAllByUserId(String clientId) {
+        return agreementRepository.findAllByClientId(clientId);
+    }
 
     public void saveAgreement(Agreement agreement) {
         agreementRepository.save(agreement);
