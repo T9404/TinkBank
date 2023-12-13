@@ -20,8 +20,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "clients")
-public class Client {
+@Table(name = "users")
+public class Users {
     @Id
     @Column(name = "id")
     private String id;

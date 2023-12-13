@@ -4,8 +4,8 @@ import com.academy.fintech.application.ApplicationRequest;
 import com.academy.fintech.origination.core.service.application.db.application.Application;
 import com.academy.fintech.origination.core.service.application.db.application.ApplicationService;
 import com.academy.fintech.origination.core.service.application.db.application.enums.ApplicationStatus;
-import com.academy.fintech.origination.core.service.application.db.client.Client;
 import com.academy.fintech.origination.core.service.application.db.client.ClientService;
+import com.academy.fintech.origination.core.service.application.db.client.Users;
 import com.academy.fintech.origination.core.service.application.exception.ApplicationAlreadyExists;
 import io.grpc.Metadata;
 import io.grpc.StatusRuntimeException;
@@ -23,35 +23,35 @@ public class CreationApplicationService {
 
     @Transactional
     public String createApplication(ApplicationRequest request) {
-        Client client = saveClient(request);
-        Application application = buildApplication(request, client);
+        Users users = saveClient(request);
+        Application application = buildApplication(request, users);
         try {
-            handleDuplicates(client, application);
+            handleDuplicates(users, application);
             var createdApplication = applicationService.saveApplication(application);
             return createdApplication.getId();
         } catch (StatusRuntimeException exception) {
-            Application existingApplication = applicationService.findApplication(client, application.getStatus(),
+            Application existingApplication = applicationService.findApplication(users, application.getStatus(),
                     application.getRequestedDisbursementAmount()).orElseThrow();
             return exception.getTrailers().get(Metadata.Key.of(existingApplication.getId(), Metadata.ASCII_STRING_MARSHALLER));
         }
     }
 
-    private Client saveClient(ApplicationRequest request) {
-        Client potentialClient = mapToClient(request);
-        return clientService.saveClient(potentialClient);
+    private Users saveClient(ApplicationRequest request) {
+        Users potentialUser = mapToClient(request);
+        return clientService.saveClient(potentialUser);
     }
 
-    private Application buildApplication(ApplicationRequest request, Client client) {
+    private Application buildApplication(ApplicationRequest request, Users user) {
         return Application.builder()
                 .status(ApplicationStatus.NEW.getStatus())
-                .client(client)
+                .users(user)
                 .requestedDisbursementAmount(request.getDisbursementAmount())
                 .build();
     }
 
-    private void handleDuplicates(Client client, Application application) {
-        if (applicationService.isApplicationExists(client, application.getStatus(),
-                application.getRequestedDisbursementAmount())) {
+    private void handleDuplicates(Users user, Application application) {
+        if (applicationService.isApplicationExists(
+                user, application.getStatus(), application.getRequestedDisbursementAmount())) {
             throw new ApplicationAlreadyExists();
         }
     }

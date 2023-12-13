@@ -1,12 +1,12 @@
 package com.academy.fintech.origination.core.service.application.mapper;
 
 import com.academy.fintech.application.ApplicationRequest;
-import com.academy.fintech.origination.core.service.application.db.client.Client;
+import com.academy.fintech.origination.core.service.application.db.client.Users;
 
 public class ClientMapper {
 
-    public static Client mapToClient(ApplicationRequest request) {
-        return Client.builder()
+    public static Users mapToClient(ApplicationRequest request) {
+        return Users.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())

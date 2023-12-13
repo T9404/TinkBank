@@ -1,6 +1,6 @@
 package com.academy.fintech.origination.core.service.application.db.application;
 
-import com.academy.fintech.origination.core.service.application.db.client.Client;
+import com.academy.fintech.origination.core.service.application.db.client.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +19,11 @@ public class ApplicationService {
         return applicationRepository.findById(applicationId);
     }
 
-    public boolean isApplicationExists(Client client, String status, int requestedDisbursementAmount) {
-        return applicationRepository.existsByClientAndStatusAndRequestedDisbursementAmount(client, status, requestedDisbursementAmount);
+    public boolean isApplicationExists(Users users, String status, int requestedDisbursementAmount) {
+        return applicationRepository.existsByUsersAndStatusAndRequestedDisbursementAmount(users, status, requestedDisbursementAmount);
     }
 
-    public Optional<Application> findApplication(Client client, String status, int requestedDisbursementAmount) {
-        return applicationRepository.findByClientAndStatusAndRequestedDisbursementAmount(client, status, requestedDisbursementAmount);
+    public Optional<Application> findApplication(Users users, String status, int requestedDisbursementAmount) {
+        return applicationRepository.findByUsersAndStatusAndRequestedDisbursementAmount(users, status, requestedDisbursementAmount);
     }
 }

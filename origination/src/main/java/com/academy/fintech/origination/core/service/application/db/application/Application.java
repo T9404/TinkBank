@@ -1,6 +1,6 @@
 package com.academy.fintech.origination.core.service.application.db.application;
 
-import com.academy.fintech.origination.core.service.application.db.client.Client;
+import com.academy.fintech.origination.core.service.application.db.client.Users;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,8 +30,8 @@ public class Application {
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client client;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private Users users;
 
     @Column(name = "requested_disbursement_amount", nullable = false)
     private int requestedDisbursementAmount;
