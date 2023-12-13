@@ -10,6 +10,8 @@ h2 = "2.1.214"
 [plugins]
 spring = { id = "org.springframework.boot", version.ref = "spring-boot" }
 protobuf = { id = "com.google.protobuf", version = "0.9.4" }
+liquibase-gradle = { id = "org.liquibase.gradle", version = "2.0.4" }
+spring-dependency-management = { id = "io.spring.dependency-management", version = "1.0.6.RELEASE" }
 
 [libraries]
 spring-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
@@ -28,6 +30,7 @@ postgresql = { module = "org.postgresql:postgresql" }
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.6.0" }
 validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
 liquibase-core = { module = "org.liquibase:liquibase-core" }
+slf4j = { module = "org.slf4j:slf4j-api", version = "1.7.25" }
 
 grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc" }
 grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }

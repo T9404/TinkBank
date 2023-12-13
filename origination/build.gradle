@@ -1,28 +1,64 @@
 plugins {
+    alias(libs.plugins.spring)
+    alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.protobuf)
+    alias(libs.plugins.liquibase.gradle)
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
-    implementation libs.spring.grpc
-    implementation libs.javax.annotation
+    implementation libs.jpa
+    implementation libs.validation
+    implementation libs.liquibase.core
 
-    implementation libs.protobuf.java.util
+    liquibaseRuntime libs.postgresql
+
+    runtimeOnly libs.postgresql
+
+    testImplementation libs.logback
+
+    runtimeOnly libs.grpc.netty.shaded
     implementation libs.grpc.protobuf
-    implementation libs.grpc.stub
-    implementation libs.protobuf.java
+    implementation libs.grps.stub
+    compileOnly libs.tomcat.annotations.api
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    implementation libs.grpc.server.spring.boot.starter
+    implementation libs.grpc.client.spring.boot.starter
+    testImplementation libs.jupiter
+    testImplementation libs.spring.boot.starter.test
+
+    testImplementation libs.testcontainers
+    testImplementation libs.jupiter.testcontainers
+    testImplementation libs.postgresql.testcontainers
+
+    runtimeOnly libs.grps.services
+    implementation libs.spring.starter.parent
+    testImplementation libs.grps.test
 }
+
 
 protobuf {
     protoc {
-        artifact = 'com.google.protobuf:protoc:3.24.4'
+        artifact = "com.google.protobuf:protoc:3.22.3"
     }
-
     plugins {
         grpc {
             artifact = 'io.grpc:protoc-gen-grpc-java:1.59.0'
         }
     }
-    generateProtoTasks{
-        all()*.plugins {grpc {}}
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
     }
+}
+
+test {
+    useJUnitPlatform()
 }

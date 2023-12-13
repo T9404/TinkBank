@@ -5,6 +5,7 @@ import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment
 import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.dto.PaymentScheduleDto;
 import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.enums.PaymentStatus;
 import com.academy.fintech.pe.core.service.agreement.util.AgreementCalculator;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PaymentSchedulePaymentService {
     private static final Logger logger = LoggerFactory.getLogger(PaymentSchedulePaymentService.class);
     private final PaymentSchedulePaymentRepository paymentSchedulePaymentRepository;
 
-    public PaymentSchedulePaymentService(PaymentSchedulePaymentRepository paymentSchedulePaymentRepository) {
-        this.paymentSchedulePaymentRepository = paymentSchedulePaymentRepository;
-    }
 
     public void savePaymentSchedulePayment(Agreement agreement, Timestamp disbursementDate, PaymentSchedule paymentSchedule) {
         List<PaymentSchedulePayment> payments = calculatePayments(agreement, disbursementDate, paymentSchedule);

@@ -18,6 +18,7 @@ import org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGe
 				MultipartAutoConfiguration.class,
 				WebSocketServletAutoConfiguration.class,
 				NettyAutoConfiguration.class,
+
 				RestTemplateAutoConfiguration.class,
 				HttpMessageConvertersAutoConfiguration.class,
 				HttpEncodingAutoConfiguration.class,
@@ -31,5 +32,4 @@ public class Application {
 				.beanNameGenerator(new FullyQualifiedAnnotationBeanNameGenerator())
 				.run(args);
 	}
-
 }

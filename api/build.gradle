@@ -1,15 +1,34 @@
 plugins {
+    alias(libs.plugins.spring)
+    alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.protobuf)
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+    }
 }
 
 dependencies {
     implementation libs.spring.grpc
     implementation libs.javax.annotation
+    implementation libs.spring.grpc
 
     implementation libs.protobuf.java.util
     implementation libs.grpc.protobuf
     implementation libs.grpc.stub
     implementation libs.protobuf.java
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+    implementation libs.slf4j
 }
 
 protobuf {

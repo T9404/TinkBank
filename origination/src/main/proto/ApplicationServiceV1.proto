@@ -19,3 +19,4 @@ message ApplicationRequest{
 message ApplicationResponse{
   string applicationId = 1;
 }
+

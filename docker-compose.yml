@@ -1,17 +1,19 @@
 version: '3.8'
+
 services:
   db:
     container_name: db
     image: postgres:latest
     restart: always
     environment:
-      - POSTGRES_DB=fintech-company
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123
+      - POSTGRES_MULTIPLE_DATABASES=${ORIGINATION_DB_NAME},"${PRODUCT_ENGINE_DB_NAME}"
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - '5432:5432'
+      - '5433:5432'
     volumes:
-      - db:/var/lib/postgresql/data
+      - ./postgres-data8:/var/lib/postgresql/data8
+      - ./create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
     networks:
       - fintech-network
 
@@ -21,8 +23,33 @@ services:
       context: product-engine
       dockerfile: ./Dockerfile
     restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${PRODUCT_ENGINE_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${POSTGRES_DRIVER}
     ports:
       - '8086:8086'
+      - '9091:9091'
+    depends_on:
+      - db
+    networks:
+      - fintech-network
+
+  origination:
+    image: docker-image-origination
+    build:
+      context: origination
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${ORIGINATION_DB_NAME}
+        - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+        - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${POSTGRES_DRIVER}
+    ports:
+      - '8084:8084'
+      - '9094:9094'
     depends_on:
       - db
     networks:
@@ -34,10 +61,25 @@ services:
       context: payment-gate
       dockerfile: ./Dockerfile
     restart: always
+    environment:
+      - ORIGINATION_GRPC_HOST=product-engine
+      - ORIGINATION_GRPC_PORT=9091
     ports:
       - '8080:8080'
-    depends_on:
-      - db
+    networks:
+      - fintech-network
+
+  api:
+    image: docker-image-api
+    build:
+      context: api
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+      - ORIGINATION_GRPC_HOST=origination
+      - ORIGINATION_GRPC_PORT=9094
+    ports:
+      - '8083:8083'
     networks:
       - fintech-network
 

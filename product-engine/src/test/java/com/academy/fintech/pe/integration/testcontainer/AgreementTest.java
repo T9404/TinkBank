@@ -6,15 +6,11 @@ import com.example.agreement.AgreementResponse;
 import com.example.agreement.AgreementServiceGrpc;
 import com.google.protobuf.Timestamp;
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import proto.DisbursementProcessGrpc;
@@ -23,8 +19,6 @@ import proto.DisbursementResponse;
 
 import java.util.UUID;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
@@ -41,7 +35,6 @@ public class AgreementTest {
     private DisbursementProcessGrpc.DisbursementProcessBlockingStub disbursementProcessBlockingStub;
 
     @Test
-    @DirtiesContext
     public void testCreationAgreement() {
         AgreementResponse response = agreementServiceBlockingStub.createAgreement(AgreementRequest.newBuilder()
                 .setUserId("e58ed763-928c-4155-bee9-fdbaaadc15f3")
@@ -54,13 +47,12 @@ public class AgreementTest {
                 .build());
 
         assertAll(
-                () -> assertTrue(response.getAgreementNumber().startsWith("CL1.0-")),
+                () -> Assertions.assertTrue(response.getAgreementNumber().startsWith("CL1.0-")),
                 () -> UUID.fromString(response.getAgreementNumber().substring(6))
         );
     }
 
     @Test
-    @DirtiesContext
     public void testDisbursementAgreement() {
         Timestamp timestamp = Timestamp.newBuilder()
                 .setSeconds(1640995200)
