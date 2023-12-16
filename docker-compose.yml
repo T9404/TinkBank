@@ -47,6 +47,7 @@ services:
         - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
         - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
         - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${POSTGRES_DRIVER}
+        - GRPC_CLIENT_GRPC_SERVER_ADDRESS=static://scoring:9095
     ports:
       - '8084:8084'
       - '9094:9094'
@@ -92,8 +93,10 @@ services:
     environment:
       - PRODUCT_ENGINE_GRPC_HOST=product-engine
       - PRODUCT_ENGINE_GRPC_PORT=9091
+      - GRPC_CLIENT_GRPC_SERVER_ADDRESS=static://product-engine:9091
     ports:
       - '8087:8087'
+      - '9095:9095'
     networks:
       - fintech-network
 

@@ -31,7 +31,10 @@ mail:
   port: 587
   protocol: smtp
 
-
+application:
+  email:
+    subject: "Status application in TinkBank"
+    message-template: "Hello, %s. Your application %s has %s status"
 
 server:
   port: 8084
@@ -42,7 +45,7 @@ grpc:
     enable-reflection: true
   client:
     grpc-server:
-      address: 'static://localhost:9095'
+      address: ${GRPC_CLIENT_GRPC_SERVER_ADDRESS}
       negotiationType: plaintext
       enableKeepAlive: true
       keepAliveWithoutCalls: true

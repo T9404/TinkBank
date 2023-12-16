@@ -5,5 +5,5 @@ api:
   client:
     origination:
       grpc:
-        host: localhost
-        port: 9094
+        host: ${ORIGINATION_GRPC_HOST}
+        port: ${ORIGINATION_GRPC_PORT}

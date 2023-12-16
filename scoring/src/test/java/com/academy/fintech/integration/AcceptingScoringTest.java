@@ -39,7 +39,7 @@ public class AcceptingScoringTest {
     }
 
     @Test
-    public void testAcceptingScoringWithBigRegularPayment() {
+    public void testAcceptingScoringWithLargeRegularPayment() {
         AcceptingScoringRequest request = AcceptingScoringRequest.newBuilder()
                 .setInterest(12)
                 .setOriginationAmount(5000)

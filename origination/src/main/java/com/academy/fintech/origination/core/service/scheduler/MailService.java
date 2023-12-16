@@ -1,4 +1,4 @@
-package com.academy.fintech.origination.core.service.application;
+package com.academy.fintech.origination.core.service.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -15,7 +15,6 @@ public class MailService {
         email.setTo(to);
         email.setSubject(subject);
         email.setText(text);
-        // We agreed to comment on this line (in telegram), I checked that the letter comes
-        // mailSender.send(email);
+        mailSender.send(email);
     }
 }

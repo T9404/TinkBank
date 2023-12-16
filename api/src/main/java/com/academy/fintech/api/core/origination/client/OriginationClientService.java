@@ -30,5 +30,4 @@ public class OriginationClientService {
                 .setDisbursementAmount(applicationDto.amount())
                 .build();
     }
-
 }

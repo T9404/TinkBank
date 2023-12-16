@@ -7,12 +7,13 @@ import com.academy.fintech.application.ApplicationServiceGrpc.ApplicationService
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OriginationGrpcClient {
+    private static final Logger logger = LoggerFactory.getLogger(OriginationGrpcClient.class);
     private final ApplicationServiceBlockingStub stub;
 
     public OriginationGrpcClient(OriginationGrpcClientProperty property) {
@@ -24,9 +25,8 @@ public class OriginationGrpcClient {
         try {
             return stub.create(applicationRequest);
         } catch (StatusRuntimeException e) {
-            // log.log(Level.SEVERE, "Got error from Origination by request: " + applicationRequest.toString() + e.getTrailers().toString(), e);
+            logger.error("Got error from Origination by request: " + applicationRequest.toString() + e.getTrailers().toString(), e);
             throw e;
         }
     }
-
 }

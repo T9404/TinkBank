@@ -4,7 +4,7 @@ server:
 grpc:
   client:
     grpc-server:
-      address: 'static://localhost:9091'
+      address: ${GRPC_CLIENT_GRPC_SERVER_ADDRESS}
       negotiationType: plaintext
       enableKeepAlive: true
       keepAliveWithoutCalls: true
