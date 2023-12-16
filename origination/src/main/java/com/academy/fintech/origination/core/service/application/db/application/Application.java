@@ -1,6 +1,6 @@
 package com.academy.fintech.origination.core.service.application.db.application;
 
-import com.academy.fintech.origination.core.service.application.db.client.Users;
+import com.academy.fintech.origination.core.service.application.db.users.Users;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

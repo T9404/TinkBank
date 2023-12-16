@@ -1,0 +1,53 @@
+plugins {
+    alias(libs.plugins.spring)
+    alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.protobuf)
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation libs.validation
+
+    runtimeOnly libs.grpc.netty.shaded
+    implementation libs.grpc.protobuf
+    implementation libs.grps.stub
+    compileOnly libs.tomcat.annotations.api
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+    testImplementation libs.logback
+
+    implementation libs.grpc.server.spring.boot.starter
+    implementation libs.grpc.client.spring.boot.starter
+    testImplementation libs.jupiter
+    testImplementation libs.testcontainers
+    testImplementation libs.jupiter.testcontainers
+    testImplementation libs.spring.boot.starter.test
+
+    runtimeOnly libs.grps.services
+    implementation libs.spring.starter.parent
+    testImplementation libs.grps.test
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.22.3"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.59.0'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

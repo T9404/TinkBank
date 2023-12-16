@@ -1,6 +1,6 @@
 package com.academy.fintech.origination.core.service.application.db.application;
 
-import com.academy.fintech.origination.core.service.application.db.client.Users;
+import com.academy.fintech.origination.core.service.application.db.users.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +25,9 @@ public class ApplicationService {
 
     public Optional<Application> findApplication(Users users, String status, int requestedDisbursementAmount) {
         return applicationRepository.findByUsersAndStatusAndRequestedDisbursementAmount(users, status, requestedDisbursementAmount);
+    }
+
+    public Iterable<Application> findApplicationsByStatus(String status) {
+        return applicationRepository.findAllByStatus(status);
     }
 }
