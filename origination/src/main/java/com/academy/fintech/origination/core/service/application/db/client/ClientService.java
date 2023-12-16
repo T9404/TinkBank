@@ -12,8 +12,8 @@ public class ClientService {
     private final ClientRepository clientRepository;
 
     @Transactional
-    public Client saveClient(Client client) {
-        Optional<Client> existingClient = clientRepository.findByEmail(client.getEmail());
-        return existingClient.orElseGet(() -> clientRepository.save(client));
+    public Users saveClient(Users user) {
+        Optional<Users> existingClient = clientRepository.findByEmail(user.getEmail());
+        return existingClient.orElseGet(() -> clientRepository.save(user));
     }
 }
