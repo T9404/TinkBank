@@ -16,7 +16,6 @@ spring:
     init:
       mode: always
 
-
 grpc:
   client:
     stocks:
@@ -26,3 +25,16 @@ grpc:
   server:
     inProcessName: test
     port: -1
+
+mail:
+  default-encoding: UTF-8
+  host: smtp.gmail.com
+  username: businessmyhomeq@gmail.com
+  password: ocebvucvtygzckwx
+  port: 587
+  protocol: smtp
+
+application:
+  email:
+    subject: "Status application in TinkBank"
+    message-template: "Hello, %s. Your application %s has %s status"

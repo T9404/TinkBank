@@ -19,5 +19,4 @@ public class ApplicationController {
     public String create(@RequestBody ApplicationRequest applicationRequest) {
         return applicationService.createApplication(applicationMapper.mapRequestToDto(applicationRequest));
     }
-
 }

@@ -5,12 +5,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PaymentScheduleService {
     private final PaymentScheduleRepository paymentScheduleRepository;
+
+    public List<PaymentSchedule> findAllByAgreement(Agreement agreement) {
+        return paymentScheduleRepository.findAllByAgreement(agreement);
+    }
 
     public PaymentSchedule savePaymentSchedule(Agreement agreement) {
         int version = determineNumberOfPaymentVersions(agreement);

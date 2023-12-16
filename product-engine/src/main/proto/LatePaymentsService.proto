@@ -1,0 +1,18 @@
+syntax = "proto3";
+package com.example.payment;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+
+service LatePaymentService {
+  rpc getLatePayment (LatePaymentRequest) returns (LatePaymentResponse) {}
+}
+
+message LatePaymentRequest {
+  string user_id = 1;
+}
+
+message LatePaymentResponse {
+  repeated google.protobuf.Timestamp timestamps = 1;
+}

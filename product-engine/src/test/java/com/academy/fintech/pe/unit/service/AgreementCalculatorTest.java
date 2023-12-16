@@ -84,4 +84,15 @@ public class AgreementCalculatorTest {
 
         assertEquals(expectedPPMT, actualPPMT);
     }
+
+    @Test
+    public void testCalculatePMT2() {
+        BigDecimal principal = new BigDecimal("1005000");
+        BigDecimal annualInterestRate = new BigDecimal("12");
+        int numberOfMonths = 12;
+        BigDecimal expectedPMT = new BigDecimal("89293.03262173341587668777038402600");
+        BigDecimal actualPMT = AgreementCalculator.calculatePMT(principal, annualInterestRate, numberOfMonths);
+
+        assertEquals(expectedPMT, actualPMT);
+    }
 }

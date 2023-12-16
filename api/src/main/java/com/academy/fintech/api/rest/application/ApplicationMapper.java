@@ -15,5 +15,4 @@ public class ApplicationMapper {
                 .salary(request.salary())
                 .build();
     }
-
 }

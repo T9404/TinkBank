@@ -1,7 +1,7 @@
 grpc:
   client:
     grpc-server:
-      address: 'static://${ORIGINATION_GRPC_HOST}:${ORIGINATION_GRPC_PORT}'
+      address: 'static://${PRODUCT_ENGINE_GRPC_HOST}:${PRODUCT_ENGINE_GRPC_PORT}'
       negotiationType: plaintext
       enableKeepAlive: true
       keepAliveWithoutCalls: true

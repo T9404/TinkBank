@@ -16,6 +16,25 @@ spring:
   sql:
     init:
       mode: always
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            required: true
+
+mail:
+  default-encoding: UTF-8
+  host: smtp.gmail.com
+  username: businessmyhomeq@gmail.com
+  password: ocebvucvtygzckwx
+  port: 587
+  protocol: smtp
+
+application:
+  email:
+    subject: "Status application in TinkBank"
+    message-template: "Hello, %s. Your application %s has %s status"
 
 server:
   port: 8084
@@ -24,6 +43,12 @@ grpc:
   server:
     port: 9094
     enable-reflection: true
+  client:
+    grpc-server:
+      address: ${GRPC_CLIENT_GRPC_SERVER_ADDRESS}
+      negotiationType: plaintext
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
 
 management:
   endpoints:

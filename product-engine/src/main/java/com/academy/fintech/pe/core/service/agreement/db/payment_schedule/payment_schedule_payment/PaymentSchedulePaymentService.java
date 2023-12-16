@@ -23,6 +23,9 @@ public class PaymentSchedulePaymentService {
     private static final Logger logger = LoggerFactory.getLogger(PaymentSchedulePaymentService.class);
     private final PaymentSchedulePaymentRepository paymentSchedulePaymentRepository;
 
+    public List<PaymentSchedulePayment> findAllByPaymentSchedule(PaymentSchedule paymentSchedule) {
+        return paymentSchedulePaymentRepository.findAllByPaymentSchedule(paymentSchedule);
+    }
 
     public void savePaymentSchedulePayment(Agreement agreement, Timestamp disbursementDate, PaymentSchedule paymentSchedule) {
         List<PaymentSchedulePayment> payments = calculatePayments(agreement, disbursementDate, paymentSchedule);
