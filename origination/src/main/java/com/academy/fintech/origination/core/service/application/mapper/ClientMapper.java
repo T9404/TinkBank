@@ -1,7 +1,7 @@
 package com.academy.fintech.origination.core.service.application.mapper;
 
 import com.academy.fintech.application.ApplicationRequest;
-import com.academy.fintech.origination.core.service.application.db.client.Users;
+import com.academy.fintech.origination.core.service.application.db.users.Users;
 
 public final class ClientMapper {
 

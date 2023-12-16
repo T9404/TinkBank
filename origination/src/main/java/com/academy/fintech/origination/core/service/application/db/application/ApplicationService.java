@@ -1,6 +1,6 @@
 package com.academy.fintech.origination.core.service.application.db.application;
 
-import com.academy.fintech.origination.core.service.application.db.client.Users;
+import com.academy.fintech.origination.core.service.application.db.users.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

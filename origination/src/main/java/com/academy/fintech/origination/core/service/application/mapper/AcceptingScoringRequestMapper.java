@@ -10,9 +10,9 @@ public final class AcceptingScoringRequestMapper {
      */
     public static AcceptingScoringRequest mapToAcceptingScoringRequest(Application application) {
         return AcceptingScoringRequest.newBuilder()
-                .setUserId(application.getClient().getId())
+                .setUserId(application.getUsers().getId())
                 .setDisbursementAmount(application.getRequestedDisbursementAmount())
-                .setSalary(application.getClient().getSalary())
+                .setSalary(application.getUsers().getSalary())
                 .setLoanTerm(12)
                 .setInterest(12)
                 .setOriginationAmount(5000)

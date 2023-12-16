@@ -49,8 +49,8 @@ public class ApplicationScorerService {
     }
 
     private void sendApplicationStatusEmail(Application application) {
-        String recipientEmail = application.getClient().getEmail();
-        String firstName = application.getClient().getFirstName();
+        String recipientEmail = application.getUsers().getEmail();
+        String firstName = application.getUsers().getFirstName();
         String applicationId = application.getId();
         String status = application.getStatus();
         String message = String.format(emailMessageTemplate, firstName, applicationId, status);
