@@ -39,6 +39,9 @@ public class Application {
     @Column(name = "status", nullable = false)
     private String status;
 
+    @Column(name = "agreement_id")
+    private String agreementId;
+
     @PrePersist
     public void prePersist() {
         id = String.valueOf(UUID.randomUUID());

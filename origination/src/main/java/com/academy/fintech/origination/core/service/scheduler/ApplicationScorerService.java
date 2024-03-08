@@ -1,21 +1,31 @@
 package com.academy.fintech.origination.core.service.scheduler;
 
+import com.academy.fintech.origination.core.service.agreement.CreateAgreementService;
 import com.academy.fintech.origination.core.service.application.db.application.Application;
 import com.academy.fintech.origination.core.service.application.db.application.ApplicationService;
 import com.academy.fintech.origination.core.service.application.db.application.enums.ApplicationStatus;
+import com.academy.fintech.origination.core.service.application.payment_gate.client.SendingDisbursementService;
 import com.academy.fintech.origination.core.service.application.scoring.client.AcceptingScoringService;
+import com.example.disbursement.SendDisbursementRequest;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
+import static com.academy.fintech.origination.core.converter.ProtobufConverter.toProtobufDecimalValue;
 import static com.academy.fintech.origination.core.service.application.mapper.AcceptingScoringRequestMapper.mapToAcceptingScoringRequest;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ApplicationScorerService {
+    private final SendingDisbursementService sendingDisbursementService;
+    private final CreateAgreementService createAgreementService;
     private final AcceptingScoringService acceptingScoringService;
     private final ApplicationService applicationService;
     private final MailService mailService;
@@ -26,10 +36,9 @@ public class ApplicationScorerService {
     @Value("${application.email.message-template}")
     private String emailMessageTemplate;
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000)
     public void checkScoring() {
-        applicationService.findApplicationsByStatus(ApplicationStatus.NEW.getStatus())
-                .forEach(this::processApplication);
+        applicationService.findApplicationsByStatus(ApplicationStatus.NEW.getStatus()).forEach(this::processApplication);
     }
 
     @Transactional
@@ -39,13 +48,49 @@ public class ApplicationScorerService {
 
         try {
             int score = acceptingScoringService.acceptScoring(mapToAcceptingScoringRequest(application));
-            application.setStatus(score > 0 ? ApplicationStatus.ACCEPTED.getStatus() : ApplicationStatus.CLOSED.getStatus());
+            handleScore(application, score);
+            applicationService.saveApplication(application);
         } catch (StatusRuntimeException exception) {
             application.setStatus(ApplicationStatus.NEW.getStatus());
         }
 
         applicationService.saveApplication(application);
         sendApplicationStatusEmail(application);
+    }
+
+    private void handleScore(Application application, int score) {
+        if (score <= 0) {
+            application.setStatus(ApplicationStatus.CLOSED.getStatus());
+            return;
+        }
+
+        application.setStatus(ApplicationStatus.ACCEPTED.getStatus());
+
+        createAgreement(application);
+
+        sendDisbursement(application);
+    }
+
+    private void createAgreement(Application application) {
+        log.info("Creating agreement for application: {}", application.getId());
+
+        var agreementId = createAgreementService.createAgreement(application);
+        application.setAgreementId(agreementId);
+
+        applicationService.saveApplication(application);
+        log.info("Agreement created: {}", agreementId);
+    }
+
+    private void sendDisbursement(Application application) {
+        log.info("Sending disbursement for application: {}", application.getId());
+
+        var sendDisbursementRequest = SendDisbursementRequest.newBuilder()
+                .setApplicationId(application.getAgreementId())
+                .setAmount(toProtobufDecimalValue(BigDecimal.valueOf(application.getRequestedDisbursementAmount())))
+                .build();
+
+        sendingDisbursementService.sendDisbursement(sendDisbursementRequest);
+        log.info("Disbursement sent: {}", application.getAgreementId());
     }
 
     private void sendApplicationStatusEmail(Application application) {

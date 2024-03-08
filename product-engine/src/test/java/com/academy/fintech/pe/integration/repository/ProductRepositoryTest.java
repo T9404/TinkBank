@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class  ProductRepositoryTest {
+public class ProductRepositoryTest {
 
     @Autowired
     ProductRepository productRepository;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         productRepository.deleteByCode("CL 1.1.10");
     }
 

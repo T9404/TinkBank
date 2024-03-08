@@ -1,15 +1,15 @@
 server:
-  port: 8087
+  port: ${SERVER_PORT:8087}
 
 grpc:
   client:
     grpc-server:
-      address: ${GRPC_CLIENT_GRPC_SERVER_ADDRESS}
+      address: static://${GRPC_HOST_PRODUCT_ENGINE:localhost}:${GRPC_PORT_PRODUCT_ENGINE:9091}
       negotiationType: plaintext
       enableKeepAlive: true
       keepAliveWithoutCalls: true
   server:
-    port: 9095
+    port: ${SERVER_PORT_GRPC:9095}
 
 management:
   endpoints:
@@ -23,6 +23,4 @@ management:
 late:
   payment:
     threshold:
-      days: 7
-
-
+      days: ${LATE_PAYMENT_THRESHOLD_DAYS:7}

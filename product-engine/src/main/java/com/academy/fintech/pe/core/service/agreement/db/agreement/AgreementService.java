@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import proto.DisbursementRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.academy.fintech.pe.core.service.agreement.util.ProtobufConverter.fromGoogleTimestampToLocalDateTime;
 
@@ -21,6 +22,10 @@ public class AgreementService {
 
     public List<Agreement> findAllByUserId(String clientId) {
         return agreementRepository.findAllByClientId(clientId);
+    }
+
+    public Optional<Agreement> findById(String agreementId) {
+        return agreementRepository.findById(agreementId);
     }
 
     public void saveAgreement(Agreement agreement) {

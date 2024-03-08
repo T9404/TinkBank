@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package com.example.disbursement;
+
+option java_multiple_files = true;
+
+service SendDisbursementService {
+  rpc SendDisbursement (SendDisbursementRequest) returns (SendDisbursementResponse);
+}
+
+message DecimalValue {
+  uint32 scale = 1;
+  uint32 precision = 2;
+  bytes value = 3;
+}
+
+message SendDisbursementRequest {
+  string applicationId = 1;
+  DecimalValue amount = 2;
+}
+
+message SendDisbursementResponse {
+  string status = 1;
+}
