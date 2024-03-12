@@ -33,6 +33,15 @@ public class BalanceServiceV1 {
         balanceService.save(debitBalance);
     }
 
+    public void save(Balance balance) {
+        balanceService.save(balance);
+    }
+
+    public Balance getBalance(String agreementId, BalanceType type) {
+        return balanceService.findByAgreementIdAndType(agreementId, type.name())
+                .orElseThrow(() -> new BalanceNotFoundException("Credit balance not found for agreementId: " + agreementId));
+    }
+
     private void createBalanceIfNotExists(Agreement agreement, String type) {
         var balance = balanceService.findByAgreementIdAndType(agreement.getId(), type);
 
