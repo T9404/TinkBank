@@ -1,9 +1,9 @@
 server:
-  port: 8083
+  port: ${API_PORT:8083}
 
 api:
   client:
     origination:
       grpc:
-        host: ${ORIGINATION_GRPC_HOST}
-        port: ${ORIGINATION_GRPC_PORT}
+        host: ${ORIGINATION_GRPC_HOST:localhost}
+        port: ${ORIGINATION_GRPC_PORT:9094}

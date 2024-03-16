@@ -1,7 +1,61 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:payment-gate}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:123}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  sql:
+    init:
+      mode: always
+  profiles:
+    active: default
+
 grpc:
+  server:
+    port: ${PAYMENT_GATE_GRPC_PORT:9097}
+    enable-reflection: true
   client:
-    grpc-server:
-      address: 'static://${PRODUCT_ENGINE_GRPC_HOST}:${PRODUCT_ENGINE_GRPC_PORT}'
+    product-engine:
+      address: static://${PRODUCT_ENGINE_GRPC_HOST:localhost}:${PRODUCT_ENGINE_GRPC_PORT:9091}
       negotiationType: plaintext
       enableKeepAlive: true
       keepAliveWithoutCalls: true
+    origination:
+      address: static://${ORIGINATION_GRPC_HOST:localhost}:${ORIGINATION_GRPC_PORT:9094}
+      negotiationType: plaintext
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+
+server:
+  port: ${PAYMENT_GATE_PORT:8088}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    db:
+      enabled: false
+
+bank:
+  identification:
+    number: ${BANK_IDENTIFICATION_NUMBER:TIN7710140671}
+
+backoff:
+  base-time-minutes: ${BACKOFF_BASE_TIME_MINUTES:10}
+  max-attempts: ${BACKOFF_MAX_ATTEMPTS:10}
+
+merchant-provider:
+  host: ${MERCHANT_PROVIDER_HOST:localhost}
+  port: ${MERCHANT_PROVIDER_PORT:8089}
+  scheme: ${MERCHANT_PROVIDER_SCHEME:http}
+
