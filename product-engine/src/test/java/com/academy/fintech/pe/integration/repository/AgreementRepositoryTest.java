@@ -30,7 +30,7 @@ public class AgreementRepositoryTest {
     AgreementRepository agreementRepository;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         productRepository.deleteAll();
         agreementRepository.deleteAll();
     }

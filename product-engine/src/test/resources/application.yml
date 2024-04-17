@@ -12,3 +12,6 @@ grpc:
   server:
     inProcessName: test
     port: -1
+
+scheduler:
+  checkOverdueRate: 1000

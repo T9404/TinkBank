@@ -1,0 +1,33 @@
+plugins {
+    alias(libs.plugins.spring)
+    alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.liquibase.gradle)
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation libs.spring.web
+    implementation libs.jdbc
+    implementation libs.liquibase.core
+    liquibaseRuntime libs.postgresql
+    runtimeOnly libs.postgresql
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    implementation libs.webflux
+
+    testImplementation libs.jupiter
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.testcontainers
+    testImplementation libs.jupiter.testcontainers
+    testImplementation libs.postgresql.testcontainers
+    testImplementation libs.rest.assured
+}
+
+test {
+    useJUnitPlatform()
+}

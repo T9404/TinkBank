@@ -2,9 +2,11 @@ plugins {
     alias(libs.plugins.spring)
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.protobuf)
+    alias(libs.plugins.liquibase.gradle)
 }
 
 dependencies {
+    implementation libs.spring.web
     runtimeOnly libs.grpc.netty.shaded
     implementation libs.grpc.protobuf
     implementation libs.grps.stub
@@ -13,6 +15,29 @@ dependencies {
 
     compileOnly libs.lombok
     annotationProcessor libs.lombok
+
+    implementation libs.jpa
+    implementation libs.validation
+    implementation libs.liquibase.core
+    liquibaseRuntime libs.postgresql
+    runtimeOnly libs.postgresql
+
+    implementation libs.webflux
+
+    testImplementation libs.jupiter
+    testImplementation libs.spring.boot.starter.test
+
+    testImplementation libs.testcontainers
+    testImplementation libs.jupiter.testcontainers
+    testImplementation libs.postgresql.testcontainers
+
+    implementation libs.grpc.server.spring.boot.starter
+    implementation libs.grpc.client.spring.boot.starter
+    runtimeOnly libs.grps.services
+    implementation libs.spring.starter.parent
+    testImplementation libs.grps.test
+    testImplementation libs.rest.assured
+
 }
 
 protobuf {
@@ -29,4 +54,9 @@ protobuf {
             grpc {}
         }
     }
+}
+
+test{
+    useJUnitPlatform()
+    forkEvery = 1
 }

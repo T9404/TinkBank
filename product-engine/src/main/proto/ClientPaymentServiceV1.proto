@@ -1,0 +1,23 @@
+syntax = "proto3";
+package com.example.payment;
+
+option java_multiple_files = true;
+
+service ClientPaymentService {
+  rpc AddClientPayment(ClientPaymentRequest) returns (ClientPaymentResponse);
+}
+
+message DecimalValue {
+  uint32 scale = 1;
+  uint32 precision = 2;
+  bytes value = 3;
+}
+
+message ClientPaymentRequest {
+  string application_id = 1;
+  DecimalValue amount = 2;
+}
+
+message ClientPaymentResponse {
+  string status = 1;
+}

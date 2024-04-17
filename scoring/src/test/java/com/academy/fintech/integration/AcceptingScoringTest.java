@@ -1,6 +1,6 @@
 package com.academy.fintech.integration;
 
-import com.academy.fintech.Application;
+import com.academy.fintech.ScoringApplication;
 import com.example.payment.AcceptingScoringRequest;
 import com.example.payment.AcceptingScoringResponse;
 import com.example.payment.AcceptingScoringServiceGrpc;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@ContextConfiguration(classes= Application.class)
+@ContextConfiguration(classes= ScoringApplication.class)
 @SpringJUnitConfig(classes = { ServiceIntegrationConfig.class})
 public class AcceptingScoringTest {
 

@@ -6,4 +6,6 @@ COPY /build/libs/*.jar origination.jar
 
 CMD ["java", "-jar", "origination.jar"]
 
-EXPOSE 9094
+EXPOSE ${ORIGINATION_PORT}
+
+EXPOSE ${ORIGINATION_GRPC_PORT}
