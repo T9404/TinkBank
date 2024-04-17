@@ -31,3 +31,6 @@ management:
   health:
     db:
       enabled: false
+
+scheduler:
+  checkOverdueRate: 86400000

@@ -3,10 +3,12 @@ on:
     branches:
       - master
       - origination-implement
+      - feature/payment-gate-integration
   push:
     branches:
       - master
       - origination-implement
+      - feature/payment-gate-integration
 
 jobs:
   build:
