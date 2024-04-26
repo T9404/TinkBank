@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:data-warehouse}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:123}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  sql:
+    init:
+      mode: always
+  config:
+    import:
+      - classpath:kafka/application-dwh-source.yaml
+      - classpath:kafka/application-kafka.yaml
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: ${DATA_WAREHOUSE_PORT:8085}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    db:
+      enabled: false

@@ -1,0 +1,5 @@
+exporter:
+  dwh:
+    data-application:
+      source-topic: "raw.data.application"
+      error-topic: "v1.data.application.error"
