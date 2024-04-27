@@ -6,7 +6,7 @@ import com.academy.fintech.application.CancelApplicationServiceGrpc;
 import com.academy.fintech.application.ApplicationRequest;
 import com.academy.fintech.application.ApplicationResponse;
 import com.academy.fintech.application.ApplicationServiceGrpc;
-import com.academy.fintech.origination.Application;
+import com.academy.fintech.origination.OriginationApplication;
 import com.academy.fintech.origination.core.service.application.db.application.ApplicationRepository;
 import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -26,9 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@ContextConfiguration(classes= Application.class)
+@ContextConfiguration(classes= OriginationApplication.class)
 @SpringJUnitConfig(classes = { ServiceIntegrationConfig.class, TestContainerConfig.class })
-public class ApplicationTest {
+public class OriginationApplicationTest {
 
     @GrpcClient("stocks")
     private ApplicationServiceGrpc.ApplicationServiceBlockingStub applicationServiceBlockingStub;

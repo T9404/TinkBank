@@ -1,6 +1,6 @@
 package integration.testcontainer;
 
-import com.academy.fintech.origination.Application;
+import com.academy.fintech.origination.OriginationApplication;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
@@ -12,6 +12,6 @@ import org.springframework.context.annotation.Configuration;
         GrpcServerAutoConfiguration.class,
         GrpcServerFactoryAutoConfiguration.class,
         GrpcClientAutoConfiguration.class,
-        Application.class})
+        OriginationApplication.class})
 public class ServiceIntegrationConfig {
 }

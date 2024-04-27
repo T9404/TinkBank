@@ -58,3 +58,8 @@ management:
   health:
     db:
       enabled: false
+
+outbox:
+  application:
+    listener:
+      fixed-rate: 1000

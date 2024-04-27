@@ -3,6 +3,7 @@
 set -e
 set -u
 
+echo "$POSTGRES_USER"
 function create_user_and_database() {
 	local database=$1
 	echo "  Creating user and database '$database'"
@@ -12,6 +13,8 @@ function create_user_and_database() {
 	    GRANT ALL PRIVILEGES ON DATABASE $database TO $database;
 EOSQL
 }
+
+echo "$POSTGRES_USER"
 
 if [ -n "$POSTGRES_MULTIPLE_DATABASES" ]; then
 	echo "Multiple database creation requested: $POSTGRES_MULTIPLE_DATABASES"
