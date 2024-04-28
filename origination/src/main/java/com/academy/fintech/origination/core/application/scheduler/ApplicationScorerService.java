@@ -37,7 +37,7 @@ public class ApplicationScorerService {
     @Value("${application.email.message-template}")
     private String emailMessageTemplate;
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     public void checkScoring() {
         applicationService.findApplicationsByStatus(ApplicationStatus.NEW.getStatus()).forEach(this::processApplication);
     }

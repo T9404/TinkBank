@@ -32,9 +32,8 @@ public class OutboxApplicationService {
         return outboxApplicationRepository.setAllPending(status.name());
     }
 
-    @Transactional
     public void updateStatus(OutboxApplication outboxApplication, OutboxApplicationStatus status) {
         outboxApplication.setStatus(status);
-        outboxApplicationRepository.save(outboxApplication);
+        outboxApplicationRepository.saveAndFlush(outboxApplication);
     }
 }

@@ -81,9 +81,9 @@ outbox:
     kafkaTransformTimeout: 60000
     kafkaSendTimeout: 180000
     exporter:
-      fixed-rate: 1000
+      fixed-rate: 10000
     stalled:
-      fixed-rate: 1000
+      fixed-rate: 10000
 
 exporter:
   application:

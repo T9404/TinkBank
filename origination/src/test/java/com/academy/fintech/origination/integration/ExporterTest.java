@@ -51,7 +51,7 @@ class ExporterTest {
         assertThat(savedApplication).isNotNull();
 
         await()
-                .atMost(1, SECONDS)
+                .atMost(11, SECONDS)
                 .untilAsserted(() -> {
                     var outboxApplication = outboxApplicationRepository.findAllByStatus(OutboxApplicationStatus.PENDING.name());
                     assertThat(outboxApplication).isNotEmpty();
@@ -59,7 +59,7 @@ class ExporterTest {
 
 
         await()
-                .atMost(5, SECONDS)
+                .atMost(15, SECONDS)
                 .untilAsserted(() -> {
                     var outboxApplication = outboxApplicationRepository.findAllByStatus(OutboxApplicationStatus.SENT.name());
                     assertThat(outboxApplication).isNotEmpty();
