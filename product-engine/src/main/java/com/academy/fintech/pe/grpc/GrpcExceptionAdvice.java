@@ -3,6 +3,8 @@ package com.academy.fintech.pe.grpc;
 import com.academy.fintech.pe.core.agreement.exception.AgreementNotFoundException;
 import com.academy.fintech.pe.core.agreement.exception.AgreementValidationException;
 import com.academy.fintech.pe.core.agreement.exception.PaymentInFutureException;
+import com.academy.fintech.pe.core.service.balance.exception.BalanceNotFoundException;
+import com.academy.fintech.pe.core.service.balance.exception.BalanceTypeException;
 import io.grpc.Metadata;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
@@ -38,6 +40,22 @@ public class GrpcExceptionAdvice {
         Status status = Status.INVALID_ARGUMENT.withDescription(exception.getMessage());
         Metadata metadata = getMetadata();
         logger.error("Cash loan validation exception", exception);
+        return status.asRuntimeException(metadata);
+    }
+
+    @GrpcExceptionHandler(BalanceNotFoundException.class)
+    public StatusRuntimeException handleBalanceNotFound(Exception exception) {
+        Status status = Status.NOT_FOUND.withDescription(exception.getMessage());
+        Metadata metadata = getMetadata();
+        logger.error("Balance not found", exception);
+        return status.asRuntimeException(metadata);
+    }
+
+    @GrpcExceptionHandler(BalanceTypeException.class)
+    public StatusRuntimeException handleBalanceTypeException(Exception exception) {
+        Status status = Status.INVALID_ARGUMENT.withDescription(exception.getMessage());
+        Metadata metadata = getMetadata();
+        logger.error("Balance type exception", exception);
         return status.asRuntimeException(metadata);
     }
 

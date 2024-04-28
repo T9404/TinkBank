@@ -1,6 +1,6 @@
 package com.academy.fintech.integration;
 
-import com.academy.fintech.Application;
+import com.academy.fintech.ScoringApplication;
 import com.academy.fintech.core.service.approval.EstimateService;
 import com.academy.fintech.core.service.approval.product.engine.client.LatePaymentService;
 import com.academy.fintech.core.service.approval.product.engine.client.PeriodPaymentService;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
         GrpcServerAutoConfiguration.class,
         GrpcServerFactoryAutoConfiguration.class,
         GrpcClientAutoConfiguration.class,
-        Application.class})
+        ScoringApplication.class})
 public class ServiceIntegrationConfig {
 
     @Value("${late.payment.threshold.days}")

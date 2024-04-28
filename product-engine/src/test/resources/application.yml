@@ -28,6 +28,10 @@ grpc:
     inProcessName: test
     port: -1
 
+scheduler:
+  checkOverdueRate: 1000
+
+
 exporter:
   agreement:
     source-topic: "raw.agreement"

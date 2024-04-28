@@ -6,15 +6,14 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=${ORIGINATION_DB_NAME},"${PRODUCT_ENGINE_DB_NAME}"
+      - POSTGRES_MULTIPLE_DATABASES=${ORIGINATION_DB_NAME},"${PRODUCT_ENGINE_DB_NAME}","${PAYMENT_GATE_DB_NAME}",${MERCHANT_DB_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - '5432:5432'
     volumes:
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
       - ./postgres-data8:/var/lib/postgresql/data8
-      - ./create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
-    command: -c wal_level=logical -p 5432
     networks:
       - fintech-network
 
@@ -119,17 +118,19 @@ services:
       - fintech-network
 
   product-engine:
-    image: docker-image-product-engine
+    image: product-engine:latest
     build:
       context: product-engine
       dockerfile: ./Dockerfile
     restart: always
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${PRODUCT_ENGINE_DB_NAME}
-      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
-      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${POSTGRES_DRIVER}
-      - KAFKA_BOOTSTRAP_SERVERS=broker:29092
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=${PRODUCT_ENGINE_DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PRODUCT_ENGINE_PORT=8086
+      - PRODUCT_ENGINE_GRPC_PORT=9091
     ports:
       - '8086:8086'
       - '9091:9091'
@@ -138,19 +139,49 @@ services:
     networks:
       - fintech-network
 
+  merchant-provider:
+    image: merchant-provider:latest
+    build:
+      context: merchant-provider
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=${MERCHANT_DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PAYMENT_GATE_HOST=payment-gate
+      - PAYMENT_GATE_PORT=8088
+      - PAYMENT_GATE_SCHEME=http
+      - MERCHANT_PROVIDER_PORT=8082
+    ports:
+      - '8082:8082'
+    depends_on:
+      - db
+    networks:
+      - fintech-network
+
   origination:
-    image: docker-image-origination
+    image: origination:latest
     build:
       context: origination
       dockerfile: ./Dockerfile
     restart: always
     environment:
-        - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${ORIGINATION_DB_NAME}
-        - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
-        - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
-        - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${POSTGRES_DRIVER}
-        - GRPC_CLIENT_GRPC_SERVER_ADDRESS=static://scoring:9095
-        - KAFKA_BOOTSTRAP_SERVERS=broker:29092
+        - POSTGRES_HOST=db
+        - POSTGRES_PORT=5432
+        - POSTGRES_DB=${ORIGINATION_DB_NAME}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - GRPC_SCORING_HOST=scoring
+        - GRPC_SCORING_PORT=9095
+        - GRPC_PAYMENT_GATE_HOST=payment-gate
+        - GRPC_PAYMENT_GATE_PORT=9097
+        - GRPC_PRODUCT_ENGINE_HOST=product-engine
+        - GRPC_PRODUCT_ENGINE_PORT=9091
+        - ORIGINATION_PORT=8084
+        - ORIGINATION_GRPC_PORT=9094
     ports:
       - '8084:8084'
       - '9094:9094'
@@ -160,21 +191,39 @@ services:
       - fintech-network
 
   payment-gate:
-    image: docker-image-payment-gate
+    image: payment-gate:latest
     build:
       context: payment-gate
       dockerfile: ./Dockerfile
     restart: always
     environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=${PAYMENT_GATE_DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - PRODUCT_ENGINE_GRPC_HOST=product-engine
       - PRODUCT_ENGINE_GRPC_PORT=9091
+      - ORIGINATION_GRPC_HOST=origination
+      - ORIGINATION_GRPC_PORT=9094
+      - MERCHANT_PROVIDER_HOST=merchant-provider
+      - MERCHANT_PROVIDER_PORT=8082
+      - MERCHANT_PROVIDER_SCHEME=http
+      - PAYMENT_GATE_PORT=8088
+      - PAYMENT_GATE_GRPC_PORT=9097
+      - BANK_IDENTIFICATION_NUMBER=TIN7710140671
+      - BACKOFF_BASE_TIME_MINUTES=10
+      - BACKOFF_MAX_ATTEMPTS=10
     ports:
-      - '8080:8080'
+      - '8088:8088'
+      - '9097:9097'
+    depends_on:
+      - db
     networks:
       - fintech-network
 
   api:
-    image: docker-image-api
+    image: api:latest
     build:
       context: api
       dockerfile: ./Dockerfile
@@ -182,21 +231,24 @@ services:
     environment:
       - ORIGINATION_GRPC_HOST=origination
       - ORIGINATION_GRPC_PORT=9094
+      - API_PORT=8082
     ports:
       - '8082:8082'
     networks:
       - fintech-network
 
   scoring:
-    image: docker-image-scoring
+    image: scoring:latest
     build:
       context: scoring
       dockerfile: ./Dockerfile
     restart: always
     environment:
-      - PRODUCT_ENGINE_GRPC_HOST=product-engine
-      - PRODUCT_ENGINE_GRPC_PORT=9091
-      - GRPC_CLIENT_GRPC_SERVER_ADDRESS=static://product-engine:9091
+      - GRPC_HOST_PRODUCT_ENGINE=product-engine
+      - GRPC_PORT_PRODUCT_ENGINE=9091
+      - SERVER_PORT=8087
+      - SERVER_PORT_GRPC=9095
+      - LATE_PAYMENT_THRESHOLD_DAYS=7
     ports:
       - '8087:8087'
       - '9095:9095'

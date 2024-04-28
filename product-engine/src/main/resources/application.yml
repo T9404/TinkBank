@@ -1,13 +1,9 @@
 spring:
   datasource:
-    url:
-      jdbc:postgresql://localhost:5432/fintech-company
-    username:
-      postgres
-    driver-class-name:
-      org.postgresql.Driver
-    password:
-      123
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:fintech-company}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:123}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: none
@@ -15,8 +11,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   liquibase:
-    change-log:
-      classpath:db/changelog/db.changelog-master.xml
+    change-log: classpath:db/changelog/db.changelog-master.xml
   sql:
     init:
       mode: always
@@ -30,11 +25,11 @@ spring:
     import: classpath:application-cdc.yml
 
 server:
-  port: 8086
+  port: ${PRODUCT_ENGINE_PORT:8086}
 
 grpc:
   server:
-    port: 9091
+    port: ${PRODUCT_ENGINE_GRPC_PORT:9091}
 
 management:
   endpoints:
@@ -44,3 +39,6 @@ management:
   health:
     db:
       enabled: false
+
+scheduler:
+  checkOverdueRate: 86400000

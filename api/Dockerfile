@@ -4,4 +4,6 @@ WORKDIR /api
 
 COPY /build/libs/*.jar api.jar
 
+EXPOSE ${API_PORT}
+
 CMD ["java", "-jar", "api.jar"]

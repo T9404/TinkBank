@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:merchant}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:123}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  sql:
+    init:
+      mode: always
+  config:
+    activate:
+      on-profile: dev
+
+server:
+  port: ${MERCHANT_PROVIDER_PORT:8089}
+
+max-waiting-seconds: 604800
+
+payment-gate:
+  host: ${PAYMENT_GATE_HOST:localhost}
+  port: ${PAYMENT_GATE_PORT:8088}
+  scheme: ${PAYMENT_GATE_SCHEME:http}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    db:
+      enabled: false

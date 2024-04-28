@@ -7,4 +7,5 @@ include 'origination'
 include 'scoring'
 include 'untitled'
 include 'scoring'
+include 'merchant-provider'
 

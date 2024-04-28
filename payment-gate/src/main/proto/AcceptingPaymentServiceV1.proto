@@ -1,0 +1,17 @@
+syntax = "proto3";
+package com.example.payment;
+
+option java_multiple_files = true;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service AcceptingPaymentService {
+  rpc AcceptPayment(AcceptPaymentRequest) returns (google.protobuf.Empty);
+}
+
+message AcceptPaymentRequest {
+  string applicationId = 1;
+  google.protobuf.Timestamp payment_date = 2;
+  string status = 3;
+}

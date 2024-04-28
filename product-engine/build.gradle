@@ -64,4 +64,5 @@ protobuf {
 
 test {
     useJUnitPlatform()
+    forkEvery = 1
 }

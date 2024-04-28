@@ -1,11 +1,6 @@
 package com.academy.fintech.origination.integration;
 
-import com.academy.fintech.application.CancelApplicationRequest;
-import com.academy.fintech.application.CancelApplicationResponse;
-import com.academy.fintech.application.CancelApplicationServiceGrpc;
-import com.academy.fintech.application.ApplicationRequest;
-import com.academy.fintech.application.ApplicationResponse;
-import com.academy.fintech.application.ApplicationServiceGrpc;
+import com.academy.fintech.application.*;
 import com.academy.fintech.origination.OriginationApplication;
 import com.academy.fintech.origination.core.application.db.application.ApplicationRepository;
 import com.academy.fintech.origination.core.application.db.outbox.OutboxApplicationRepository;

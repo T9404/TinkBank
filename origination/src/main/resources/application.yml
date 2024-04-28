@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/origination
-    username: postgres
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:origination}
+    username: ${POSTGRES_USER:postgres}
     driver-class-name: org.postgresql.Driver
-    password: 123
+    password: ${POSTGRES_PASSWORD:123}
   jpa:
     hibernate:
       ddl-auto: none
@@ -42,15 +42,25 @@ application:
     message-template: "Hello, %s. Your application %s has %s status"
 
 server:
-  port: 8084
+  port: ${ORIGINATION_PORT:8084}
 
 grpc:
   server:
-    port: 9094
+    port: ${ORIGINATION_GRPC_PORT:9094}
     enable-reflection: true
   client:
     grpc-server:
-      address: ${GRPC_CLIENT_GRPC_SERVER_ADDRESS:localhost:9095}
+      address: static://${GRPC_SCORING_HOST:localhost}:${GRPC_SCORING_PORT:9095}
+      negotiationType: plaintext
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+    payment-gate:
+      address: static://${GRPC_PAYMENT_GATE_HOST:localhost}:${GRPC_PAYMENT_GATE_PORT:9097}
+      negotiationType: plaintext
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+    product-engine:
+      address: static://${GRPC_PRODUCT_ENGINE_HOST:localhost}:${GRPC_PRODUCT_ENGINE_PORT:9091}
       negotiationType: plaintext
       enableKeepAlive: true
       keepAliveWithoutCalls: true

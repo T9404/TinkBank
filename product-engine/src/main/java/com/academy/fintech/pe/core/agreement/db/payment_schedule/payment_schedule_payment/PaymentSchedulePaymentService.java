@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,19 @@ public class PaymentSchedulePaymentService {
         return paymentSchedulePaymentRepository.findAllByPaymentSchedule(paymentSchedule);
     }
 
+    public List<PaymentSchedulePayment> findAllOverduePayments() {
+        return paymentSchedulePaymentRepository
+                .findAllByStatusAndPaymentDateIsBefore(PaymentStatus.FUTURE.getStatus(), OffsetDateTime.now().toLocalDateTime());
+    }
+
     public void savePaymentSchedulePayment(Agreement agreement, Timestamp disbursementDate, PaymentSchedule paymentSchedule) {
         List<PaymentSchedulePayment> payments = calculatePayments(agreement, disbursementDate, paymentSchedule);
         logger.info("Initial payment graphic generated: {}", payments);
         paymentSchedulePaymentRepository.saveAll(payments);
+    }
+
+    public void save(PaymentSchedulePayment payment) {
+        paymentSchedulePaymentRepository.save(payment);
     }
 
     private List<PaymentSchedulePayment> calculatePayments(Agreement agreement, Timestamp disbursementDate, PaymentSchedule paymentSchedule) {

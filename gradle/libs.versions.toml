@@ -33,6 +33,8 @@ validation = { module = "org.springframework.boot:spring-boot-starter-validation
 liquibase-core = { module = "org.liquibase:liquibase-core" }
 kafka = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-boot" }
 
+jdbc = { module = "org.springframework.boot:spring-boot-starter-data-jdbc" }
+webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
 
 grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc" }
 grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }
@@ -52,6 +54,7 @@ jupiter-testcontainers = { module = "org.testcontainers:junit-jupiter", version 
 postgresql-testcontainers = { module = "org.testcontainers:postgresql" }
 h2database = { module = "com.h2database:h2", version.ref = "h2" }
 grps-test = { module = "io.grpc:grpc-testing", version.ref = "grpc" }
+rest-assured = { module = "io.rest-assured:rest-assured" }
 kafka-test = { module = "org.springframework.kafka:spring-kafka-test" }
 kafka-testcontainers = { module = "org.testcontainers:kafka" }
 awaitility = { module = "org.awaitility:awaitility" }
