@@ -3,7 +3,7 @@ package com.academy.fintech.origination.grpc.application.v1;
 import com.academy.fintech.application.ApplicationRequest;
 import com.academy.fintech.application.ApplicationResponse;
 import com.academy.fintech.application.ApplicationServiceGrpc;
-import com.academy.fintech.origination.core.service.application.CreationApplicationService;
+import com.academy.fintech.origination.core.application.CreationApplicationService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;

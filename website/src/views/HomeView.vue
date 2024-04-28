@@ -59,7 +59,7 @@ export default {
     },
     sendApplication() {
       this.step = 0;
-      axios.post('http://localhost:8083/api/application', this.form);
+      axios.post('http://localhost:8082/api/application', this.form);
     }
   }
 }

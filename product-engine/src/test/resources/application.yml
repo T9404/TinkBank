@@ -2,6 +2,21 @@ spring:
   liquibase:
     change-log:
       classpath:db/changelog/db.changelog-master.xml
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${KAFKA_GROUP_ID:my-group-id}
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    listener:
+      ack-mode: MANUAL_IMMEDIATE
+
+consumer:
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
 
 grpc:
   client:
@@ -12,3 +27,9 @@ grpc:
   server:
     inProcessName: test
     port: -1
+
+exporter:
+  agreement:
+    source-topic: "raw.agreement"
+    out-topic: "v1.agreement.cdc"
+    group-id: my-group-id

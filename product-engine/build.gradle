@@ -13,6 +13,7 @@ dependencies {
     implementation libs.jpa
     implementation libs.validation
     implementation libs.liquibase.core
+    implementation libs.kafka
 
     liquibaseRuntime libs.postgresql
 

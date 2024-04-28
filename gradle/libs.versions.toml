@@ -31,7 +31,8 @@ postgresql = { module = "org.postgresql:postgresql" }
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.6.0" }
 validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
 liquibase-core = { module = "org.liquibase:liquibase-core" }
-slf4j = { module = "org.slf4j:slf4j-api", version = "1.7.25" }
+kafka = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-boot" }
+
 
 grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc" }
 grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }
@@ -51,3 +52,7 @@ jupiter-testcontainers = { module = "org.testcontainers:junit-jupiter", version 
 postgresql-testcontainers = { module = "org.testcontainers:postgresql" }
 h2database = { module = "com.h2database:h2", version.ref = "h2" }
 grps-test = { module = "io.grpc:grpc-testing", version.ref = "grpc" }
+kafka-test = { module = "org.springframework.kafka:spring-kafka-test" }
+kafka-testcontainers = { module = "org.testcontainers:kafka" }
+awaitility = { module = "org.awaitility:awaitility" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version = "2.17.0" }

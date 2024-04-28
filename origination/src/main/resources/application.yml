@@ -22,6 +22,11 @@ spring:
         smtp:
           starttls:
             required: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 mail:
   default-encoding: UTF-8
@@ -45,7 +50,7 @@ grpc:
     enable-reflection: true
   client:
     grpc-server:
-      address: ${GRPC_CLIENT_GRPC_SERVER_ADDRESS}
+      address: ${GRPC_CLIENT_GRPC_SERVER_ADDRESS:localhost:9095}
       negotiationType: plaintext
       enableKeepAlive: true
       keepAliveWithoutCalls: true
@@ -61,5 +66,15 @@ management:
 
 outbox:
   application:
-    listener:
+    pendingTimeoutInSeconds: 10
+    retryMaxAttempts: 3
+    kafkaTransformTimeout: 60000
+    kafkaSendTimeout: 180000
+    exporter:
       fixed-rate: 1000
+    stalled:
+      fixed-rate: 1000
+
+exporter:
+  application:
+    topic: "v1.origination"

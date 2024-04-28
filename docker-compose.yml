@@ -14,6 +14,7 @@ services:
     volumes:
       - ./postgres-data8:/var/lib/postgresql/data8
       - ./create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
+    command: -c wal_level=logical -p 5432
     networks:
       - fintech-network
 
@@ -25,7 +26,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - "2181:2181"
+      - '2181:2181'
     healthcheck:
       test: echo srvr | nc zookeeper 2181 || exit 1
       start_period: 10s
@@ -72,7 +73,7 @@ services:
     depends_on:
       - broker
     ports:
-      - "8090:8080"
+      - '8090:8080'
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:29092
@@ -82,15 +83,40 @@ services:
 
   debezium:
     image: debezium/connect:latest
+    restart: always
     container_name: debezium
+    hostname: debezium
+    depends_on:
+      broker:
+        condition: service_healthy
     ports:
-      - 8082:8082
+      - '8083:8083'
     environment:
-      GROUP_ID: 1
-      CONFIG_STORAGE_TOPIC: debezium-config
-      OFFSET_STORAGE_TOPIC: debezium-offset
-      STATUS_STORAGE_TOPIC: debezium-status
       BOOTSTRAP_SERVERS: broker:29092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: connect_configs
+      STATUS_STORAGE_TOPIC: connect_statuses
+      OFFSET_STORAGE_TOPIC: connect_offsets
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      ENABLE_DEBEZIUM_SCRIPTING: 'true'
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '--silent',
+          '--fail',
+          '-X',
+          'GET',
+          'http://localhost:8083/connectors',
+        ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fintech-network
 
   product-engine:
     image: docker-image-product-engine
@@ -103,6 +129,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
       - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${POSTGRES_DRIVER}
+      - KAFKA_BOOTSTRAP_SERVERS=broker:29092
     ports:
       - '8086:8086'
       - '9091:9091'
@@ -123,6 +150,7 @@ services:
         - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
         - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${POSTGRES_DRIVER}
         - GRPC_CLIENT_GRPC_SERVER_ADDRESS=static://scoring:9095
+        - KAFKA_BOOTSTRAP_SERVERS=broker:29092
     ports:
       - '8084:8084'
       - '9094:9094'
@@ -155,7 +183,7 @@ services:
       - ORIGINATION_GRPC_HOST=origination
       - ORIGINATION_GRPC_PORT=9094
     ports:
-      - '8083:8083'
+      - '8082:8082'
     networks:
       - fintech-network
 

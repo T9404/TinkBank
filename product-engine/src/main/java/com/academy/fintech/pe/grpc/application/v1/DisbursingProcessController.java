@@ -1,6 +1,6 @@
 package com.academy.fintech.pe.grpc.application.v1;
 
-import com.academy.fintech.pe.core.service.agreement.AgreementDisbursementService;
+import com.academy.fintech.pe.core.agreement.AgreementDisbursementService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;

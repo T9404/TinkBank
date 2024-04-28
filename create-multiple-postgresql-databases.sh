@@ -16,6 +16,8 @@ EOSQL
 
 echo "$POSTGRES_USER"
 
+echo "$POSTGRES_USER"
+
 if [ -n "$POSTGRES_MULTIPLE_DATABASES" ]; then
 	echo "Multiple database creation requested: $POSTGRES_MULTIPLE_DATABASES"
 	for db in $(echo $POSTGRES_MULTIPLE_DATABASES | tr ',' ' '); do

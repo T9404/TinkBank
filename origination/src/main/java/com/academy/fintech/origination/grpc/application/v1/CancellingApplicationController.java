@@ -3,7 +3,7 @@ package com.academy.fintech.origination.grpc.application.v1;
 import com.academy.fintech.application.CancelApplicationRequest;
 import com.academy.fintech.application.CancelApplicationResponse;
 import com.academy.fintech.application.CancelApplicationServiceGrpc;
-import com.academy.fintech.origination.core.service.application.CancellingApplicationService;
+import com.academy.fintech.origination.core.application.CancellingApplicationService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;

@@ -1,6 +1,6 @@
 package com.academy.fintech.pe.unit.service;
 
-import com.academy.fintech.pe.core.service.agreement.util.ProtobufConverter;
+import com.academy.fintech.pe.core.converter.ProtobufConverter;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

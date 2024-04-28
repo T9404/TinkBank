@@ -1,8 +1,8 @@
 package com.academy.fintech.pe.grpc;
 
-import com.academy.fintech.pe.core.service.agreement.exception.AgreementNotFoundException;
-import com.academy.fintech.pe.core.service.agreement.exception.AgreementValidationException;
-import com.academy.fintech.pe.core.service.agreement.exception.PaymentInFutureException;
+import com.academy.fintech.pe.core.agreement.exception.AgreementNotFoundException;
+import com.academy.fintech.pe.core.agreement.exception.AgreementValidationException;
+import com.academy.fintech.pe.core.agreement.exception.PaymentInFutureException;
 import io.grpc.Metadata;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
