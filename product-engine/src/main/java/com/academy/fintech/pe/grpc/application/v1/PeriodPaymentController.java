@@ -1,6 +1,6 @@
 package com.academy.fintech.pe.grpc.application.v1;
 
-import com.academy.fintech.pe.core.service.agreement.util.AgreementCalculator;
+import com.academy.fintech.pe.core.calculator.AgreementCalculator;
 import com.example.payment.PeriodPaymentRequest;
 import com.example.payment.PeriodPaymentResponse;
 import com.example.payment.PeriodPaymentServiceGrpc;

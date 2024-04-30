@@ -1,5 +1,5 @@
 server:
-  port: ${API_PORT:8083}
+  port: ${API_PORT:8082}
 
 api:
   client:

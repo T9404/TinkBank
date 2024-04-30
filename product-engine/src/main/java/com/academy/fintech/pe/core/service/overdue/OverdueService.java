@@ -1,8 +1,8 @@
 package com.academy.fintech.pe.core.service.overdue;
 
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePayment;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePaymentService;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.enums.PaymentStatus;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePayment;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePaymentService;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule_payment.enums.PaymentStatus;
 import com.academy.fintech.pe.core.service.balance.BalanceServiceV1;
 import com.academy.fintech.pe.core.service.balance.db.Balance;
 import com.academy.fintech.pe.core.service.balance.db.enums.BalanceType;

@@ -38,3 +38,18 @@ application:
   email:
     subject: "Status application in TinkBank"
     message-template: "Hello, %s. Your application %s has %s status"
+
+outbox:
+  application:
+    pendingTimeoutInSeconds: 10
+    retryMaxAttempts: 3
+    kafkaTransformTimeout: 60000
+    kafkaSendTimeout: 180000
+    exporter:
+      fixed-rate: 1000
+    stalled:
+      fixed-rate: 1000
+
+exporter:
+  application:
+    topic: "v1.origination"

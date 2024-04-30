@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation libs.jpa
+    implementation libs.kafka
     implementation libs.validation
     implementation libs.liquibase.core
 
@@ -37,6 +38,10 @@ dependencies {
     testImplementation libs.testcontainers
     testImplementation libs.jupiter.testcontainers
     testImplementation libs.postgresql.testcontainers
+    testImplementation libs.kafka.test
+    testImplementation libs.kafka.testcontainers
+    testImplementation libs.awaitility
+    testImplementation "com.fasterxml.jackson.core:jackson-databind"
 
     runtimeOnly libs.grps.services
     implementation libs.spring.starter.parent
@@ -62,4 +67,5 @@ protobuf {
 
 test {
     useJUnitPlatform()
+    forkEvery = 1
 }

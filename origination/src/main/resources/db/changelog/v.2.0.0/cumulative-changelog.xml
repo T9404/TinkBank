@@ -9,5 +9,6 @@
     </changeSet>
 
     <include file="001_update_application.sql" relativeToChangelogFile="true"/>
+    <include file="001_outbox_application.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

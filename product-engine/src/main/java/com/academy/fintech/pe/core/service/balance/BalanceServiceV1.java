@@ -1,11 +1,11 @@
 package com.academy.fintech.pe.core.service.balance;
 
-import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
-import com.academy.fintech.pe.core.service.agreement.db.agreement.AgreementService;
+import com.academy.fintech.pe.core.agreement.db.agreement.Agreement;
+import com.academy.fintech.pe.core.agreement.db.agreement.AgreementService;
 import com.academy.fintech.pe.core.service.balance.db.Balance;
+import com.academy.fintech.pe.core.agreement.exception.AgreementNotFoundException;
 import com.academy.fintech.pe.core.service.balance.db.BalanceService;
 import com.academy.fintech.pe.core.service.balance.db.enums.BalanceType;
-import com.academy.fintech.pe.core.service.agreement.exception.AgreementNotFoundException;
 import com.academy.fintech.pe.core.service.balance.exception.BalanceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

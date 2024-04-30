@@ -1,8 +1,8 @@
 package com.academy.fintech.pe.integration.testcontainer;
 
 import com.academy.fintech.pe.ProductEngineApplication;
+import com.academy.fintech.pe.integration.testcontainer.config.RepositoryTestContainerConfig;
 import com.academy.fintech.pe.integration.testcontainer.config.ServiceIntegrationConfig;
-import com.academy.fintech.pe.integration.testcontainer.config.TestContainerConfig;
 import com.example.agreement.AgreementRequest;
 import com.example.agreement.AgreementResponse;
 import com.example.agreement.AgreementServiceGrpc;
@@ -25,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@ContextConfiguration(classes = ProductEngineApplication.class)
-@SpringJUnitConfig(classes = {ServiceIntegrationConfig.class, TestContainerConfig.class})
+@ContextConfiguration(classes= ProductEngineApplication.class)
+@SpringJUnitConfig(classes = { ServiceIntegrationConfig.class, RepositoryTestContainerConfig.class })
 @Testcontainers
 public class AgreementTest {
 

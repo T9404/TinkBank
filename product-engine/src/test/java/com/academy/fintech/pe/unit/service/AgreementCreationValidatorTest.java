@@ -1,9 +1,9 @@
 package com.academy.fintech.pe.unit.service;
 
-import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
-import com.academy.fintech.pe.core.service.agreement.db.product.Product;
-import com.academy.fintech.pe.core.service.agreement.exception.AgreementValidationException;
-import com.academy.fintech.pe.core.service.agreement.validation.AgreementCreationValidator;
+import com.academy.fintech.pe.core.agreement.db.agreement.Agreement;
+import com.academy.fintech.pe.core.agreement.db.product.Product;
+import com.academy.fintech.pe.core.agreement.exception.AgreementValidationException;
+import com.academy.fintech.pe.core.agreement.validation.AgreementCreationValidator;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

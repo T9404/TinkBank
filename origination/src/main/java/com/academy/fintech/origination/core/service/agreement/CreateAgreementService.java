@@ -1,7 +1,7 @@
 package com.academy.fintech.origination.core.service.agreement;
 
+import com.academy.fintech.origination.core.application.db.application.Application;
 import com.academy.fintech.origination.core.service.agreement.product_engine.client.AgreementService;
-import com.academy.fintech.origination.core.service.application.db.application.Application;
 import com.example.agreement.AgreementRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

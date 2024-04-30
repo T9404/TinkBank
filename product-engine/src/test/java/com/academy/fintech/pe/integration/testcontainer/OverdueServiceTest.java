@@ -1,16 +1,16 @@
 package com.academy.fintech.pe.integration.testcontainer;
 
 import com.academy.fintech.pe.ProductEngineApplication;
-import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
-import com.academy.fintech.pe.core.service.agreement.db.agreement.AgreementRepository;
-import com.academy.fintech.pe.core.service.agreement.db.agreement.enums.AgreementStatus;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule.PaymentSchedule;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule.PaymentScheduleRepository;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePayment;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePaymentRepository;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.enums.PaymentStatus;
-import com.academy.fintech.pe.core.service.agreement.db.product.Product;
-import com.academy.fintech.pe.core.service.agreement.db.product.ProductRepository;
+import com.academy.fintech.pe.core.agreement.db.agreement.Agreement;
+import com.academy.fintech.pe.core.agreement.db.agreement.AgreementRepository;
+import com.academy.fintech.pe.core.agreement.db.agreement.enums.AgreementStatus;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule.PaymentSchedule;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule.PaymentScheduleRepository;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePayment;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePaymentRepository;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule_payment.enums.PaymentStatus;
+import com.academy.fintech.pe.core.agreement.db.product.Product;
+import com.academy.fintech.pe.core.agreement.db.product.ProductRepository;
 import com.academy.fintech.pe.core.service.balance.BalanceServiceV1;
 import com.academy.fintech.pe.core.service.balance.db.BalanceRepository;
 import com.academy.fintech.pe.core.service.balance.db.enums.BalanceType;
@@ -90,9 +90,7 @@ public class OverdueServiceTest {
         creditBalance.setBalance(new BigDecimal(10000));
         balanceServiceV1.save(creditBalance);
 
-
         overdueService.checkOverdue();
-
 
         var updatedCreditBalance = balanceServiceV1.getBalance(agreement.getId(), BalanceType.CREDIT);
         var updatedDebitBalance = balanceServiceV1.getBalance(agreement.getId(), BalanceType.DEBIT);
