@@ -2,7 +2,6 @@ package com.academy.fintech.pe.core.agreement;
 
 import com.academy.fintech.pe.core.agreement.db.payment_schedule.ScheduleService;
 import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePayment;
-import com.academy.fintech.pe.core.converter.ProtobufConverter;
 import com.academy.fintech.pe.core.service.balance.BalanceServiceV1;
 import com.example.payment.ClientPaymentRequest;
 import com.google.protobuf.Timestamp;
@@ -13,7 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.academy.fintech.pe.core.conveter.ProtobufConverter.toBigDecimal;
+import static com.academy.fintech.pe.core.converter.BigDecimalConverter.toBigDecimal;
+import static com.academy.fintech.pe.core.converter.TimestampConverter.toGoogleTimestampUTC;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class PaymentServiceV1 {
         List<PaymentSchedulePayment> payments = scheduleService.findAllLatePayment(agreementId);
 
         List<Timestamp> latePayments = payments.stream()
-                .map(payment -> ProtobufConverter.toGoogleTimestampUTC(payment.getPaymentDate()))
+                .map(payment -> toGoogleTimestampUTC(payment.getPaymentDate()))
                 .toList();
 
         logger.debug("Late payments for agreementId {}: {}", agreementId, latePayments);

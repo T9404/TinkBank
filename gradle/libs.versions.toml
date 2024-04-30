@@ -35,7 +35,6 @@ kafka = { module = "org.springframework.kafka:spring-kafka", version.ref = "spri
 
 jdbc = { module = "org.springframework.boot:spring-boot-starter-data-jdbc" }
 webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
-kafka = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-boot" }
 grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc" }
 grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }
 grps-stub = { module = "io.grpc:grpc-stub", version.ref = "grpc" }
@@ -58,4 +57,3 @@ rest-assured = { module = "io.rest-assured:rest-assured" }
 kafka-test = { module = "org.springframework.kafka:spring-kafka-test" }
 kafka-testcontainers = { module = "org.testcontainers:kafka" }
 awaitility = { module = "org.awaitility:awaitility" }
-jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version = "2.17.0" }

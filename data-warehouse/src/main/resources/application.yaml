@@ -13,7 +13,7 @@ spring:
       mode: always
   config:
     import:
-      - classpath:kafka/application-dwh-source.yaml
+      - classpath:kafka/application-dwh-exporter.yaml
       - classpath:kafka/application-kafka.yaml
   main:
     allow-bean-definition-overriding: true

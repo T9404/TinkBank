@@ -8,6 +8,8 @@
         <tagDatabase tag="v.1.0.0"/>
     </changeSet>
 
-    <include file="001_create_table.sql" relativeToChangelogFile="true"/>
+    <include file="001_create_trigger.sql" relativeToChangelogFile="true"/>
+    <include file="002_create_agreement.sql" relativeToChangelogFile="true"/>
+    <include file="002_create_application.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -1,7 +1,7 @@
-package com.academy.fintech.dwh.kafka.listener;
+package com.academy.fintech.dwh.kafka.application;
 
-import com.academy.fintech.dwh.core.application.data.service.ApplicationDataService;
-import com.academy.fintech.dwh.public_interface.application.ApplicationDataDto;
+import com.academy.fintech.dwh.core.application.service.ApplicationService;
+import com.academy.fintech.dwh.public_interface.application.ApplicationExportDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,24 +15,21 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Component
 @RequiredArgsConstructor
-public class KafkaEventListener {
-    private final ApplicationDataService applicationDataService;
+public class ApplicationListener {
+    private final ApplicationService applicationService;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper jsonMapper;
 
-    @Value("${exporter.dwh.data-application.error-topic}")
+    @Value("${exporter.dwh.application.error-topic}")
     private String errorTopicName;
 
     @KafkaListener(
-            topics = "${exporter.dwh.data-application.source-topic}",
+            topics = "${exporter.dwh.application.source-topic}",
             groupId = "${consumer.kafka.group-id}",
             batch = "true"
     )
@@ -49,33 +46,22 @@ public class KafkaEventListener {
     private void processRecord(ConsumerRecord<String, String> consumerRecord) {
         try {
             var dataApplicationDto = getEvent(consumerRecord);
-            applicationDataService.save(dataApplicationDto);
+            applicationService.save(dataApplicationDto);
         } catch (Exception exception) {
             kafkaTemplate.send(errorTopicName, consumerRecord.key(), consumerRecord.value());
         }
     }
 
     @SneakyThrows(JsonProcessingException.class)
-    private ApplicationDataDto getEvent(ConsumerRecord<String, String> consumerRecord) {
-        JsonNode payload = jsonMapper.readTree(consumerRecord.value()).get("payload");
+    private ApplicationExportDto getEvent(ConsumerRecord<String, String> consumerRecord) {
+        JsonNode payload = jsonMapper.readTree(consumerRecord.value());
 
-        LocalDate businessDate = parseDate(payload.get("business_date").asText());
-
-        return ApplicationDataDto.builder()
-                .id(payload.get("id").asText())
-                .content(payload.get("content").asText())
-                .businessDate(businessDate)
+        return ApplicationExportDto.builder()
+                .dataApplicationId(payload.get("dataApplicationId").asText())
+                .applicationId(payload.get("applicationId").asText())
+                .status(payload.get("status").asText())
+                .createdAt(payload.get("createdAt").asLong())
                 .build();
-    }
-
-    private LocalDate parseDate(String date) {
-        DateTimeFormatterBuilder dateTimeFormatterBuilder = new DateTimeFormatterBuilder()
-                .append(DateTimeFormatter.ofPattern("[dd/MM/yyyy]" + "[yyyy/MM/dd]"
-                        + "[dd-MM-yyyy]" + "[yyyy-MM-dd]"
-                        + "[dd.MM.yyyy]" + "[yyyy.MM.dd]"));
-
-        DateTimeFormatter dateTimeFormatter = dateTimeFormatterBuilder.toFormatter();
-        return LocalDate.parse(date, dateTimeFormatter);
     }
 
 }

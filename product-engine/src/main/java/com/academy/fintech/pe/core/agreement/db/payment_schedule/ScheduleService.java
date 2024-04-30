@@ -2,7 +2,6 @@ package com.academy.fintech.pe.core.agreement.db.payment_schedule;
 
 import com.academy.fintech.pe.core.agreement.db.agreement.Agreement;
 import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePaymentService;
-import com.academy.fintech.pe.core.converter.ProtobufConverter;
 import com.academy.fintech.pe.core.agreement.db.agreement.AgreementService;
 import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule.PaymentSchedule;
 import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule.PaymentScheduleService;
@@ -17,6 +16,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.academy.fintech.pe.core.converter.TimestampConverter.fromGoogleTimestampToLocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
@@ -25,7 +26,7 @@ public class ScheduleService {
     private final AgreementService agreementService;
 
     public void generateInitialPaymentGraphic(DisbursementRequest request) {
-        LocalDateTime disbursementLocalDate = ProtobufConverter.fromGoogleTimestampToLocalDateTime(request.getPaymentDate());
+        LocalDateTime disbursementLocalDate = fromGoogleTimestampToLocalDateTime(request.getPaymentDate());
         Timestamp disbursementTimestamp = Timestamp.valueOf(disbursementLocalDate);
 
         Agreement agreement = agreementService.getAgreementByAgreementNumber(request.getAgreementNumber());

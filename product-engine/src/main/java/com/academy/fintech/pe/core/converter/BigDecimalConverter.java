@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.core.conveter;
+package com.academy.fintech.pe.core.converter;
 
 import com.example.payment.DecimalValue;
 import com.google.protobuf.ByteString;
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 
-public class ProtobufConverter {
+public class BigDecimalConverter {
 
     /**
      * Converts a BigDecimal to a DecimalValue

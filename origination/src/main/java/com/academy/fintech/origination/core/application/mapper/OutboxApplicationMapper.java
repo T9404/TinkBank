@@ -6,6 +6,8 @@ import com.academy.fintech.origination.core.application.exporter.dto.Application
 import java.time.LocalDate;
 import java.util.UUID;
 
+import static com.academy.fintech.origination.core.converter.LocalDateConverter.convertToLong;
+
 public final class OutboxApplicationMapper {
 
     private OutboxApplicationMapper() {
@@ -19,7 +21,7 @@ public final class OutboxApplicationMapper {
                 .dataApplicationId(UUID.randomUUID().toString())
                 .applicationId(application.getId())
                 .status(application.getStatus())
-                .createdAt(LocalDate.now())
+                .createdAt(convertToLong(LocalDate.now()))
                 .build();
     }
 }

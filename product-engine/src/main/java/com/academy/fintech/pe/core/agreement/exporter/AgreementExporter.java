@@ -15,12 +15,12 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.*;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-import static com.academy.fintech.pe.core.converter.LocalDateConverter.convertToLocalDate;
+import static com.academy.fintech.pe.core.converter.LocalDateConverter.*;
 
 @Service
 @RequiredArgsConstructor
@@ -50,11 +50,11 @@ public class AgreementExporter {
     private AgreementExportDto getEvent(ConsumerRecord<String, String> record) {
         JsonNode payload = jsonMapper.readTree(record.value()).get("payload").get("after");
 
-        LocalDate businessDate = convertToLocalDate(payload.get("disbursement_date").asLong());
+        LocalDate date = convertMicrosecondsToLocalDate(payload.get("disbursement_date").asLong());
 
         return AgreementExportDto.builder()
                 .id(UUID.randomUUID().toString())
-                .businessDate(businessDate)
+                .businessDate(convertToLong(date))
                 .agreementNumber(payload.get("id").asText())
                 .amount(new BigDecimal(payload.get("origination_amount").asText()))
                 .status(payload.get("status").asText())

@@ -1,7 +1,6 @@
 package com.academy.fintech.pe.core.agreement.db.agreement;
 
 import com.academy.fintech.pe.core.agreement.db.agreement.enums.AgreementStatus;
-import com.academy.fintech.pe.core.converter.ProtobufConverter;
 import com.academy.fintech.pe.core.agreement.exception.AgreementNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -12,6 +11,8 @@ import proto.DisbursementRequest;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.academy.fintech.pe.core.converter.TimestampConverter.fromGoogleTimestampToLocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +41,7 @@ public class AgreementService {
         Agreement agreement = agreementRepository.findById(request.getAgreementNumber())
                 .orElseThrow(AgreementNotFoundException::new);
         agreement.setStatus(AgreementStatus.ACTIVE.getStatus());
-        agreement.setDisbursementDate(ProtobufConverter.fromGoogleTimestampToLocalDateTime(request.getPaymentDate()));
+        agreement.setDisbursementDate(fromGoogleTimestampToLocalDateTime(request.getPaymentDate()));
         logger.info("Agreement activated: {}", agreement);
         agreementRepository.save(agreement);
     }
