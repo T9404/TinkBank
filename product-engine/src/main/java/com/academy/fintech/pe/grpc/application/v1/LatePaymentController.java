@@ -1,6 +1,6 @@
 package com.academy.fintech.pe.grpc.application.v1;
 
-import com.academy.fintech.pe.core.service.agreement.PaymentServiceV1;
+import com.academy.fintech.pe.core.agreement.PaymentServiceV1;
 import com.example.payment.LatePaymentRequest;
 import com.example.payment.LatePaymentResponse;
 import com.example.payment.LatePaymentServiceGrpc;

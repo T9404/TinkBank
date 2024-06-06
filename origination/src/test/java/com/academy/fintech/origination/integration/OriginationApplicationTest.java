@@ -1,13 +1,9 @@
 package com.academy.fintech.origination.integration;
 
-import com.academy.fintech.application.CancelApplicationRequest;
-import com.academy.fintech.application.CancelApplicationResponse;
-import com.academy.fintech.application.CancelApplicationServiceGrpc;
-import com.academy.fintech.application.ApplicationRequest;
-import com.academy.fintech.application.ApplicationResponse;
-import com.academy.fintech.application.ApplicationServiceGrpc;
+import com.academy.fintech.application.*;
 import com.academy.fintech.origination.OriginationApplication;
-import com.academy.fintech.origination.core.service.application.db.application.ApplicationRepository;
+import com.academy.fintech.origination.core.application.db.application.ApplicationRepository;
+import com.academy.fintech.origination.core.application.db.outbox.OutboxApplicationRepository;
 import com.academy.fintech.origination.integration.config.ServiceIntegrationConfig;
 import com.academy.fintech.origination.integration.config.TestContainerConfig;
 import io.grpc.StatusRuntimeException;
@@ -30,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ActiveProfiles("test")
 @ContextConfiguration(classes= OriginationApplication.class)
 @SpringJUnitConfig(classes = { ServiceIntegrationConfig.class, TestContainerConfig.class })
-public class OriginationApplicationTest {
+class OriginationApplicationTest {
 
     @GrpcClient("stocks")
     private ApplicationServiceGrpc.ApplicationServiceBlockingStub applicationServiceBlockingStub;
@@ -41,13 +37,17 @@ public class OriginationApplicationTest {
     @Autowired
     private ApplicationRepository applicationRepository;
 
+    @Autowired
+    private OutboxApplicationRepository outboxApplicationRepository;
+
     @BeforeEach
     void setUp() {
+        outboxApplicationRepository.deleteAll();
         applicationRepository.deleteAll();
     }
 
     @Test
-    public void testCreationApplication() {
+    void testCreationApplication() {
         ApplicationRequest request = ApplicationRequest.newBuilder()
                 .setFirstName("John3213")
                 .setLastName("Doe2321")
@@ -61,7 +61,7 @@ public class OriginationApplicationTest {
     }
 
     @Test
-    public void testCreationApplicationWithInvalidSalary() {
+    void testCreationApplicationWithInvalidSalary() {
         ApplicationRequest request = ApplicationRequest.newBuilder()
                 .setFirstName("John3213")
                 .setLastName("Doe2321")
@@ -76,7 +76,7 @@ public class OriginationApplicationTest {
     }
 
     @Test
-    public void testDuplicateApplication() {
+    void testDuplicateApplication() {
         ApplicationRequest request = ApplicationRequest.newBuilder()
                 .setFirstName("John3213")
                 .setLastName("Doe2321")
@@ -96,7 +96,7 @@ public class OriginationApplicationTest {
     }
 
     @Test
-    public void testCancelApplication() {
+    void testCancelApplication() {
         ApplicationRequest request = ApplicationRequest.newBuilder()
                 .setFirstName("John3213")
                 .setLastName("Doe2321")
@@ -117,7 +117,7 @@ public class OriginationApplicationTest {
     }
 
     @Test
-    public void testCancelNonExistingApplication() {
+    void testCancelNonExistingApplication() {
         CancelApplicationRequest response = CancelApplicationRequest.newBuilder()
                 .setApplicationId("123")
                 .build();

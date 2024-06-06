@@ -22,6 +22,11 @@ spring:
         smtp:
           starttls:
             required: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 mail:
   default-encoding: UTF-8
@@ -68,3 +73,18 @@ management:
   health:
     db:
       enabled: false
+
+outbox:
+  application:
+    pendingTimeoutInSeconds: 10
+    retryMaxAttempts: 3
+    kafkaTransformTimeout: 60000
+    kafkaSendTimeout: 180000
+    exporter:
+      fixed-rate: 10000
+    stalled:
+      fixed-rate: 10000
+
+exporter:
+  application:
+    topic: "v1.origination"

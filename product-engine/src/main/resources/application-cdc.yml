@@ -1,0 +1,5 @@
+exporter:
+  agreement:
+    source-topic: "raw.agreement"
+    out-topic: "v1.agreement.cdc"
+    group-id: my-group-id

@@ -1,6 +1,6 @@
 package com.academy.fintech.pe.unit.service;
 
-import com.academy.fintech.pe.core.service.agreement.util.AgreementCalculator;
+import com.academy.fintech.pe.core.calculator.AgreementCalculator;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

@@ -1,6 +1,6 @@
 package com.academy.fintech.pe.core.service.balance.db;
 
-import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
+import com.academy.fintech.pe.core.agreement.db.agreement.Agreement;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

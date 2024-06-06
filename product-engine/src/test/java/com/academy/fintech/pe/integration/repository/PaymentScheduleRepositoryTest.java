@@ -1,11 +1,11 @@
 package com.academy.fintech.pe.integration.repository;
 
-import com.academy.fintech.pe.core.service.agreement.db.agreement.Agreement;
-import com.academy.fintech.pe.core.service.agreement.db.agreement.AgreementRepository;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule.PaymentSchedule;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule.PaymentScheduleRepository;
-import com.academy.fintech.pe.core.service.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePaymentRepository;
-import com.academy.fintech.pe.core.service.agreement.db.product.Product;
+import com.academy.fintech.pe.core.agreement.db.agreement.Agreement;
+import com.academy.fintech.pe.core.agreement.db.agreement.AgreementRepository;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule.PaymentSchedule;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule.PaymentScheduleRepository;
+import com.academy.fintech.pe.core.agreement.db.payment_schedule.payment_schedule_payment.PaymentSchedulePaymentRepository;
+import com.academy.fintech.pe.core.agreement.db.product.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -17,13 +17,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;
 
+import static com.academy.fintech.pe.integration.factory.AgreementFactory.createAgreement;
+import static com.academy.fintech.pe.integration.factory.ProductFactory.createProduct;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class PaymentScheduleRepositoryTest {
+class PaymentScheduleRepositoryTest {
 
     @Autowired
     PaymentScheduleRepository paymentScheduleRepository;
@@ -41,8 +43,9 @@ public class PaymentScheduleRepositoryTest {
     }
 
     @Test
-    public void testSavePayment() {
-        Agreement agreement = createAgreement();
+    void testSavePayment() {
+        Product product = createProduct();
+        Agreement agreement = createAgreement(product);
         agreementRepository.save(agreement);
 
         PaymentSchedule payment = new PaymentSchedule();
@@ -55,7 +58,7 @@ public class PaymentScheduleRepositoryTest {
     }
 
     @Test
-    public void testSavePaymentWithInvalidAgreementNumber() {
+    void testSavePaymentWithInvalidAgreementNumber() {
         PaymentSchedule payment = new PaymentSchedule();
         payment.setId(String.valueOf(UUID.randomUUID()));
         paymentScheduleRepository.save(payment);
@@ -64,7 +67,7 @@ public class PaymentScheduleRepositoryTest {
     }
 
     @Test
-    public void testSavePaymentWithInvalidData() {
+    void testSavePaymentWithInvalidData() {
         PaymentSchedule payment = new PaymentSchedule();
         payment.setId(String.valueOf(UUID.randomUUID()));
         paymentScheduleRepository.save(payment);
@@ -73,13 +76,14 @@ public class PaymentScheduleRepositoryTest {
     }
 
     @Test
-    public void findByInvalidAgreementNumber() {
+    void findByInvalidAgreementNumber() {
         assertTrue(paymentScheduleRepository.findById(String.valueOf(UUID.randomUUID())).isEmpty());
     }
 
     @Test
-    public void findById() {
-        Agreement agreement = createAgreement();
+    void findById() {
+        Product product = createProduct();
+        Agreement agreement = createAgreement(product);
         agreementRepository.save(agreement);
 
         PaymentSchedule payment = new PaymentSchedule();
@@ -92,8 +96,9 @@ public class PaymentScheduleRepositoryTest {
     }
 
     @Test
-    public void testDelete() {
-        Agreement agreement = createAgreement();
+    void testDelete() {
+        Product product = createProduct();
+        Agreement agreement = createAgreement(product);
         agreementRepository.save(agreement);
 
         PaymentSchedule payment = new PaymentSchedule();
@@ -105,20 +110,5 @@ public class PaymentScheduleRepositoryTest {
         paymentScheduleRepository.delete(payment);
 
         assertTrue(paymentScheduleRepository.findById(payment.getId()).isEmpty());
-    }
-
-    private Agreement createAgreement() {
-        Product product = createProduct();
-
-        Agreement agreement = new Agreement();
-        agreement.setId(String.valueOf(UUID.randomUUID()));
-        agreement.setProduct(product);
-        return agreement;
-    }
-
-    private Product createProduct() {
-        Product product = new Product();
-        product.setCode("CL 1.1.10");
-        return product;
     }
 }

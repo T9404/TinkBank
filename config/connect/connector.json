@@ -1,0 +1,33 @@
+//curl -X POST --location "http://localhost:8083/connectors" -H "Content-Type: application/json" -H "Accept: application/json" -d @connector.json
+
+{
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "database.dbname": "fintech-company",
+    "database.history.kafka.bootstrap.servers": "kafka:9092",
+    "database.history.kafka.topic": "transaction",
+    "database.hostname": "postgres",
+    "database.password": "123",
+    "database.port": "5432",
+    "database.server.name": "postgres",
+    "database.user": "postgres",
+    "name": "agreement-db-connector",
+    "plugin.name": "pgoutput",
+    "table.include.list": "public.agreements(.*)",
+    "transforms": "Reroute",
+    "transforms.Reroute.type": "io.debezium.transforms.ByLogicalTableRouter",
+    "transforms.Reroute.topic.regex": "(.*)public.agreements(.*)",
+    "transforms.Reroute.topic.replacement": "raw.agreement",
+    "topic.creation.default.cleanup.policy": "delete",
+    "topic.creation.default.partitions": "3",
+    "topic.creation.default.replication.factor": "1",
+    "topic.creation.default.retention.ms": "604800000",
+    "topic.creation.enable": "true",
+    "topic.prefix": "raw",
+    "message.key.columns": "public.agreements(.*):id,disbursement_date",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false",
+    "decimal.handling.mode": "string"
+  },
+  "name": "agreement-db-connector"
+}

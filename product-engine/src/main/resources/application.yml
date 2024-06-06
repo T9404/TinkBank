@@ -15,6 +15,14 @@ spring:
   sql:
     init:
       mode: always
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    listener:
+      ack-mode: MANUAL_IMMEDIATE
+  config:
+    import: classpath:application-cdc.yml
 
 server:
   port: ${PRODUCT_ENGINE_PORT:8086}

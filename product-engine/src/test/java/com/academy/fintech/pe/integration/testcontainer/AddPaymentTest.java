@@ -1,7 +1,7 @@
 package com.academy.fintech.pe.integration.testcontainer;
 
 import com.academy.fintech.pe.ProductEngineApplication;
-import com.academy.fintech.pe.core.service.agreement.db.agreement.AgreementRepository;
+import com.academy.fintech.pe.core.agreement.db.agreement.AgreementRepository;
 import com.academy.fintech.pe.core.service.balance.db.BalanceRepository;
 import com.academy.fintech.pe.core.service.balance.db.enums.BalanceType;
 import com.academy.fintech.pe.integration.testcontainer.config.ServiceIntegrationConfig;
