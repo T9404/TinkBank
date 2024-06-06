@@ -1,0 +1,8 @@
+exporter:
+  dwh:
+    agreement:
+      source-topic: "v1.agreement.cdc"
+      error-topic: "v1.data.agreement.error"
+    application:
+      source-topic: "v1.application.cdc"
+      error-topic: "v1.data.application.error"

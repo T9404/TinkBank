@@ -10,7 +10,11 @@ public final class LocalDateConverter {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
-    public static LocalDate convertToLocalDate(long date) {
-        return Instant.ofEpochMilli(date).atZone(ZoneOffset.UTC).toLocalDate();
+    public static long convertToLong(LocalDate localDate) {
+        return localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+    }
+
+    public static LocalDate convertMicrosecondsToLocalDate(long microseconds) {
+        return Instant.ofEpochMilli(microseconds / 1000).atZone(ZoneOffset.UTC).toLocalDate();
     }
 }

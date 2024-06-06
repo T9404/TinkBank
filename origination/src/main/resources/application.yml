@@ -22,11 +22,6 @@ spring:
         smtp:
           starttls:
             required: true
-  kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
-    producer:
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 mail:
   default-encoding: UTF-8
@@ -87,4 +82,4 @@ outbox:
 
 exporter:
   application:
-    topic: "v1.origination"
+    topic: "v1.application.cdc"

@@ -1,4 +1,4 @@
-package com.academy.fintech.origination.core.application.exporter.dto;
+package com.academy.fintech.dwh.public_interface.application;
 
 import lombok.Builder;
 

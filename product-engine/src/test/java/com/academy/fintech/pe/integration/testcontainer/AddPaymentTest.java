@@ -23,7 +23,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.math.BigDecimal;
 
-import static com.academy.fintech.pe.core.conveter.ProtobufConverter.toDecimalValue;
+import static com.academy.fintech.pe.core.converter.BigDecimalConverter.toDecimalValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

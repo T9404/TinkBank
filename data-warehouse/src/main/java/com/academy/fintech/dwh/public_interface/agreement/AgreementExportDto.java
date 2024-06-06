@@ -1,4 +1,4 @@
-package com.academy.fintech.pe.core.agreement.exporter.dto;
+package com.academy.fintech.dwh.public_interface.agreement;
 
 import lombok.Builder;
 
@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 @Builder
 public record AgreementExportDto(
-        String id,
+        String dataAgreementId,
         String agreementNumber,
         String status,
         long businessDate,
